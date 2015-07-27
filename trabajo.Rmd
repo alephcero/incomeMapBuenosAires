@@ -1,0 +1,81 @@
+---
+title: "Mapeo de la distribución del ingreso en la Ciudad de Buenos Aires"
+author: "Felipe Gonzalez"
+date: "17 de julio de 2015"
+output: html_document
+---
+```{r,message=FALSE}
+rm(list=ls())
+source("creacionVariablesAuxiliares.R")
+library(ggplot2)
+library(GGally) #para ggpairs()
+
+
+base = select(hogares,idHogar,pondera,ipcf,jefaturaFemenina,jefaturaCompleta,habitanteUnico,hogaresMult,nbi1:nbi,condhab:propietario)
+base$condhab = as.integer(base$condhab)
+
+#Promedio escolaridad
+base$aniosEscoProm = (base$aniosEscolaridadJefe + base$aniosEscolaridadConyu)/2
+#Cuando hay jefatura incompleta se deja del jefe
+base$aniosEscoProm[is.na(base$aniosEscoProm)] = base$aniosEscolaridadJefe
+
+
+```
+#Introducción
+
+El próposito de este trabajo es mapear la distribución del ingreso en la Ciudad de Buenos Aires. El análisis de la distribución del ingreso en su dimensión espacial arroja otra perspectiva que enrriquece el análisis y puede utilizarse más adelante como insumo para otros análisis (como puede ser por ejemplo la relación entre ersta distribución y la topografía de las redes de servicios públicos provistos por un municipio, o su recaudación impositiva segregada por barrios).
+
+Para ello, se utilizará el Censo Nacional de HOgares y Población de 2010 (Censo de aquí en más), dado que es la única fuente estadística que ofrece información desagregada a un nivel geográfico lo suficientemente específico como para realizar mapas que sean significativos. Lamentablemente, el Censo no pregunta por ingreso de manera directa, con lo cual el desafío radica en proponer un proceso que permita a partir de las variables existentes en el censo, llegar a un proxy del ingreso del hogar.
+
+La Encuesta Anual de Hogares Urbanos (EAHU) permite validar la relación existente entre determinadas variables a seleccionar y el ingreso del hogar (los diferentes tipos de ingresos). Esta base a su vez, no ofrece niveles de desagregación geográficos útiles, más allá de grandes aglomerados urbanos. Es por ello que el uso complementario de ambas puede llevar a alcanzar el objetivo deseado.
+
+Con este objetivo principal como norte, el trabajo presenta los siguiente objetivos secundarios:
+
+- Analizar las variables disponibles en el Censo 2010 y la EAHU del trercer trimestre del 2010 y comparar las variables que ambas tienen en común y las diferencias que pueda llegar a haber hacia el interior de cada una
+- Determinar, entre las variables que comparten el Censo y la EAHU, cual de ellas (ya sea en modo individual o como combinatoria de las mismas en un índice o indicador) presenta la mayor relación con el ingreso
+- Obtener del Censo 2010 los valores para esa variable (individual o compuesta) a nivel de radio censal
+- Mapear esa variable en mapa de la Ciudad Autónoma de Buenos Aires
+- Esbozar un primer análisis del mapa del ingreso de la Ciudad 
+
+#Variables comunes al Censo 2010 y EAHU
+
+
+#Variable proxy del ingreso
+
+## Variable ingreso
+
+Un primer análisis descriptivo de la variable regresada, ipcf, permite observar que existen casos extremos con ingresos per cápita 
+
+```{r}
+boxplot(base$ipcf)
+boxplot(base$capeco)
+with(base,plot(capeco,ipcf))
+```
+
+```{r}
+base = base[base$ipcf<15000,]
+```
+
+```{r}
+fit = lm(ipcf ~ capeco, data = base, weights = pondera)
+summary(fit)
+```
+
+#Variable en el Censo 2010: análisis y distribución
+#Mapa del ingreso en la Ciudad de Buenos Aires
+ Probar mapas competitivos
+#Análisis del mapa del ingreso 
+
+
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
