@@ -1,0 +1,191 @@
+* IPMH es CONDHAB y CAPECO
+
+*1 CONDHAB (MATCO y CONSAN)
+
+RUNDEF condhab
+	SELECTION ALL
+	*SELECCIONA CAPITAL
+	UNIVERSE PROV.PROV = 2 
+
+*1.1) Indicador de Materiales constructivos de la vivienda (MATCO)
+*MATCO PISO
+
+*H05 Calidad de los pisos de la vivienda
+
+  DEFINE HOGAR.MATCOPISO
+  AS SWITCH
+
+*SUFICIENTE (S): baldosa, cerámica, plástico, mader a, mármol, goma, alfombra o similares
+  INCASE HOGAR.H05 = 1 
+  ASSIGN 1
+	
+*PARCIALMENTE INSUFICIENTE (PI): cemento o ladrillo, y otros
+  INCASE HOGAR.H05 = 2 OR HOGAR.H05 = 4
+  ASSIGN 2
+
+*INSUFICIENTE (I): tierra.
+  INCASE HOGAR.H05 = 3 
+  ASSIGN 3
+
+  TYPE INTEGER
+  VALUELABELS
+  1 "Suficiente"
+  2 "Parcialmente insuficiente"
+  3 "Insuficiente"
+
+  RANGE 1-3
+  OPTIONS
+  DEFAULT 0
+  
+*  TABLE matcoPiso
+*  AS FREQUENCY OF HOGAR.MATCOPISO
+*  AREABREAK RADIO
+  
+*MATCO TECHO  
+*Calidad del techo de la vivienda : 
+*H06 Material predominante de la cubierta exterior del techo
+
+*1 Cubierta asfáltica o membrana	
+*2	Baldosa o losa
+*3	Pizarra o teja
+*4	Chapa de metal
+*5	Chapa de fibrocementos o plástico
+*6	Chapa de cartón
+*7	Caña, palma, tabla o paja con o sin barro
+*8	Otro
+
+*H07 Revistimiento interior o cielorraso del techo si (1) no (2)
+
+
+*RUNDEF matco
+*	SELECTION ALL
+*	*SELECCIONA CAPITAL
+*	UNIVERSE PROV.PROV = 2 
+
+
+  DEFINE HOGAR.MATCOTECHO
+  AS SWITCH
+  
+* SUFICIENTE (S): teja, baldosa, membrana o capa asfáltica con cielorraso y chapa de metal o fibrocemento con cielorraso y otros con cielorraso
+
+  INCASE (HOGAR.H06 <= 5 OR HOGAR.H06 = 8) AND HOGAR.H07 = 1  
+  ASSIGN 1
+
+* PARCIALMENTE INSUFICIENTE (PI): teja (3), baldosa(2), membrana o capa asfáltica (1) sin cielorraso
+
+  INCASE HOGAR.H06 <= 3 AND HOGAR.H07 = 2  
+  ASSIGN 2
+
+
+* INSUFICIENTE (I): madera, cartón, paja o desechos y chapa de metal o fibrocemento sin cielorraso y otros sin cielorraso.
+
+  INCASE HOGAR.H06 = 6 OR HOGAR.H06 = 7 OR  ((HOGAR.H06 = 4 OR HOGAR.H06 = 5 OR HOGAR.H06 = 8) AND HOGAR.H07 = 2) 
+  ASSIGN 3
+
+
+
+  TYPE INTEGER
+  VALUELABELS
+  1 "Suficiente"
+  2 "Parcialmente insuficiente"
+  3 "Insuficiente"
+
+  RANGE 1-3
+  OPTIONS
+  DEFAULT 0
+  
+*  TABLE matcoTecho
+*  AS FREQUENCY OF HOGAR.MATCOTECHO
+*  AREABREAK RADIO
+
+
+
+
+
+*1.2) Indicador de Condiciones Sanitarias de la vivienda
+
+*NORMA CONSAN: Suficiente
+
+
+  DEFINE HOGAR.CONSAN
+  AS SWITCH
+
+*-Tiene baño o letrina (H10):
+*-Tiene botón, cadena, mochila para limpieza del inodoro (H11):
+
+*SUFICIENTE: si el hogar dispone de instalación de baño con descarga de agua en el inodoro.
+
+
+  INCASE HOGAR.H10 = 1 AND HOGAR.H11 = 1  
+  ASSIGN 1
+
+
+*INSUFICIENTE: si el hogar no dispone de instalación de baño con descarga de agua en el inodoro.
+
+  INCASE HOGAR.H10 = 2 OR HOGAR.H11 = 2  
+  ASSIGN 2
+
+  TYPE INTEGER
+  VALUELABELS
+  1 "Suficiente"
+  2 "Insuficiente"
+
+  RANGE 1-2
+  OPTIONS
+  DEFAULT 0
+  
+*  TABLE consan
+*  AS FREQUENCY OF HOGAR.CONSAN
+*  AREABREAK RADIO
+
+
+
+*1.3) Integración de ambos indicadores en Condiciones Habitacionales (CONDHAB)
+
+*Se considera que la vivienda presenta condiciones habitacionales INSUFICIENTES cuando 
+*sus materiales constructivos o sus instalaciones sanitarias se encuentran por debajo de la norma.
+
+*NORMA CONSAN: Suficiente
+*NORMA MATCO: Parcialmente insuficiente
+
+
+
+*RUNDEF condhab
+*	SELECTION ALL
+*	*SELECCIONA CAPITAL
+*	UNIVERSE PROV.PROV = 2 
+
+
+  DEFINE HOGAR.CONDHAB
+  AS SWITCH
+
+  INCASE HOGAR.MATCOTECHO = 1 AND HOGAR.MATCOPISO = 1  
+  ASSIGN 1
+  
+  INCASE HOGAR.MATCOTECHO = 2 OR HOGAR.MATCOPISO = 2  
+  ASSIGN 2
+  
+  INCASE HOGAR.MATCOTECHO = 3 OR HOGAR.MATCOPISO = 3  
+  ASSIGN 3
+
+  INCASE HOGAR.CONSAN = 2  
+  ASSIGN 3
+
+
+
+  TYPE INTEGER
+  VALUELABELS
+  1 "Suficiente"
+  2 "Parcialmente insuficiente"
+  3 "Insuficiente"
+
+  RANGE 1-3
+  OPTIONS
+  DEFAULT 0
+  
+
+  TABLE condhab
+  AS FREQUENCY OF HOGAR.CONDHAB
+  AREABREAK RADIO
+
+

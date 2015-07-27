@@ -1,0 +1,10 @@
+#librerias
+library(dplyr)
+library(ggplot2)
+library(foreign)
+library(maptools)
+library(rgdal)
+library(sp)
+library(RColorBrewer)
+library(classInt)
+library(tmap)
