@@ -1,5 +1,6 @@
-rm(list=ls())
-options(encoding="utf-8")
+# Este scrip toma las bases descargadas de la EAHU de Hogares y personas en formato .dta de STATA, selecciona las variables presentes en el Censo, 
+# genera una variable única de identificaciòn (idHogar) y modifica las categorías de respuesta con problemas de encodign
+
 #Files are to be downloaded from "http://www.indec.gov.ar/ftp/cuadros/menusuperior/eahu/EAHU_2010_dta.zip"
 #in Stata format into a folder named "bases".
 
@@ -86,9 +87,79 @@ hogares$idHogar = factor(hogares$idHogar)
 #personas = select(personas,-(codusu:nro_hogar))
 #hogares = select(hogares,-(codusu:nro_hogar))
 
-#Recodifico varones en sexo
-personas$ch04 = as.character(personas$ch04)
-personas$ch04[personas$ch04=="var\xf3n"] = "varon"
-#Ordeno por idHogar
-personas = personas[order(personas$idHogar),]
-hogares = hogares[order(hogares$idHogar),]
+#RECODIFICACIÓN DE VARIABLES CON PROBLEMAS DE ENCODING
+
+#Hogares
+pasarAutf8 = function(texto.factor) {
+  etiquetas = levels(texto.factor)
+  etiquetas = iconv(etiquetas, "latin1", "utf-8")
+  texto.factor = iconv(texto.factor, "latin1", "utf-8")
+  texto.factor = factor(texto.factor,levels = etiquetas)
+  texto.factor
+} 
+
+hogares$iv1 = pasarAutf8(hogares$iv1)
+
+hogares$iv2[hogares$iv2=="99"] = NA
+
+hogares$iv3 = pasarAutf8(hogares$iv3)
+
+hogares$iv4 = pasarAutf8(hogares$iv4)
+
+hogares$iv5 = pasarAutf8(hogares$iv5)
+
+hogares$iv6 = pasarAutf8(hogares$iv6)
+
+hogares$iv7 = pasarAutf8(hogares$iv7)
+
+hogares$iv8 = pasarAutf8(hogares$iv8)
+
+hogares$iv9[hogares$iv9=="0"] = NA
+
+hogares$iv9 = factor(hogares$iv9,levels = 1:3,labels = c("Dentro de la vivienda",
+                                                         "Fuera de la vivienda pero dentro del terreno",
+                                                         "Fuera del terreno"))
+
+hogares$iv10[hogares$iv10=="0"] = NA
+
+hogares$iv10 = factor(hogares$iv10,levels = 1:3,labels = c("Inodoro con botón / mochila / cadena y arrastre de agua",
+                                                           "Inodoro sin botón / cadena y con arrastre de agua (a balde)",
+                                                           "Letrina (sin arrastre de agua)"))
+
+
+hogares$iv11[hogares$iv11=="0"] = NA
+
+hogares$iv11 = factor(hogares$iv11,levels = 1:4,labels = c("A red pública (cloaca)",
+                                                           "A cámara séptica y pozo ciego",
+                                                           "Sólo a pozo ciego",
+                                                           "A hoyo / excavación en la tierra"))
+
+
+
+hogares$ii7[hogares$ii7=="0"] = NA
+
+hogares$ii7 = factor(hogares$ii7,levels = 1:9,labels = c("Propietario de la vivienda y el terreno",
+                                                         "Propietario de la vivienda solamente",
+                                                         "Inquilino / arrendatario de la vivienda",
+                                                         "Ocupante por pago de impuestos / expensas",
+                                                         "Ocupante en relación de dependencia",
+                                                         "Ocupante gratuito (con permiso)",
+                                                         "Ocupante de hecho (sin permiso)",
+                                                         "Está en sucesión",
+                                                         "Otra situación"
+                                                         ))
+
+hogares$ii8[hogares$ii8=="0"] = NA
+
+hogares$ii8 = factor(hogares$ii8,levels = 1:4,labels = c("Gas de red",
+                                                           "Gas de tubo / garrafa",
+                                                           "Kerosene / leña/ carbón",
+                                                           "Otro"))
+
+
+
+
+#Personas
+#Sexo
+personas$ch04 = normalizarAcentos(personas$ch04)
+
