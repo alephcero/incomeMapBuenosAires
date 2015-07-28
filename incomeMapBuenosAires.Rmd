@@ -42,6 +42,7 @@ Con este objetivo principal como norte, el trabajo presenta los siguiente objeti
 
 - Medir el GDB 2010 per capita y comparar con las otras provincias
 - Comparar gini para todas las areas urbanas por provincia
+- Especificar que vamos a hablar de ingreso per capita familiar
 
 #Variables comunes al Censo 2010 y EAHU
 
@@ -78,17 +79,56 @@ La **Tabla Nº 1** resume las variables que tanto **Censo** como **EAHU** miden 
 
 En la medida en que Buenos Aires presenta el mayor nivel de ingreso per cápita, así como también es un espacio urbano consolidado ya que es una de las ciudades cuyo proceso de urbanización data de los tiempos de la colonia, es de esperar que algunas variables vinculadas a aspectos de la pobreza estructural no tengan tanta incidencia. 
 
-Un ejemplo de ello es la fuente de procedencia del agua donde todos los hogares tienen agua corriente. E incluso son una minoría (el `r round(prop.table(xtabs(pondera ~ iv8 ,hogares))[[2]]*100,2)`%) los que no tienen baño o solo el `r round(prop.table(xtabs(pondera ~ iv6 ,hogares))[[2]]*100,2)`% el que tiene agua por fuera de la vivienda.
+Un ejemplo de ello es la fuente de procedencia del agua donde todos los hogares tienen agua corriente. E incluso son una minoría (el `r round(prop.table(xtabs(pondera ~ iv8 ,hogares))[[2]]*100,2)`%) los que no tienen baño o solo el `r round(prop.table(xtabs(pondera ~ iv6 ,hogares))[[2]]*100,2)`% el que tiene agua por fuera de la vivienda. En este sentido, no es esperable que estas variables sirvan como proxy para una variable con mucha variabilidad como el ingreso en la Ciudad de Buenos Aires.
 
-```{r, tablaAgua}
-table(hogares$iv7)
-```
+Por otro lado, las variables que hacen a los materiales de la vivienda o al mecanismo de disposición de desechos en el baño, presentan mayor variabilidad y puede ser que esten relacionadas con el ingreso. Sin embargo, este set de variables es de esperar que solamente sirva para distinguir positivamente sectores de bajos ingresos, más no así para permitir la georeferenciación de los sectores de altos ingresos. Mientras que la ausencia de baño con desagüe o de calidad suficiente en el techo o piso de la vivienda podría ser un claro indicador de un hogar con bajos ingresos, hacia el interior de los hogares con presencia de ambas condiciones puede existir una dispersión de ingresos significativa. Es decir, mientras que la ausencia de estas condiciones básicas serían suficientes para considerar un hogar como de bajos ingresos, su presencia es necesaria más no suficiente para considerar a un hogar como de altos ingresos.
+
+La hipótesis de este trabajo es que, de las variables disponibles tanto en el **Censo** como en la **EAHU**, son aquellas vinculadas a los años de escolaridad, a la condición de actividad y a la conformación del hogar las que mayor relación presentan con el ingreso de modo que nos permitan poder determinar caracterizar a un hogar como de altos ingresos. Sin embargo, es de esperar que, mientras que este conjunto de variables pueda servir para la identificación del extremo superior de la escala de ingresos, no sea tan sensible con respecto al segmento inferior.
+
+Es por ello que se presume que es necesario el análisis conjunto y complementario de ambos sets de varibles, unas para identificar positivamente los sectores de más altos ingresos y el otro para indentificar positivamente los sectores de menores ingresos.
 
 #Variable proxy del ingreso
+
+A partir de la **EAHU** se puede determinar el sentido y la fuerza de la relación entre las variables seleccionadas, que también se pueden encontrar en el **Censo**, y el ingreso per cápita familiar, que es el tipo de ingreso seleccionado en este trabajo.  
 
 ## Variable ingreso
 
 Un primer análisis descriptivo de la variable regresada, ipcf, permite observar que existen casos extremos con ingresos per cápita 
+
+
+
+```{r,tablaModelos}
+base = select(hogares,idHogar,pondera,ipcf,jefaturaFemenina,jefaturaCompleta,habitanteUnico,hogaresMult,nbi1:nbi,condhab:propietario)
+base$condhab = as.integer(base$condhab)
+
+#Promedio escolaridad
+base$aniosEscoProm = (base$aniosEscolaridadJefe + base$aniosEscolaridadConyu)/2
+#Cuando hay jefatura incompleta se deja del jefe
+base$aniosEscoProm[is.na(base$aniosEscoProm)] = base$aniosEscolaridadJefe
+
+
+matrizCorrelaciones = cor(base[,3:20])
+
+ponderadores = base$pondera
+tablaModelos = data.frame(variable = NA, beta = NA, pbeta = NA, r = NA, pValue = NA)
+
+
+
+for (i in 4:ncol(base)) {
+fit = lm(ipcf ~ .,data=base[,c(3,i)],weights = ponderadores)
+f <- summary(fit)$fstatistic
+tablaModelosInsumo = data.frame(
+  variable = names(fit$coefficients[2]), 
+  beta = fit$coefficients[2], 
+  pbeta = coef(summary(fit))[2,4], 
+  r = summary(fit)$adj.r.squared, 
+  pValue = pf(f[1],f[2],f[3],lower.tail=F))
+tablaModelos = rbind(tablaModelos,tablaModelosInsumo)
+}
+```
+
+
+
 
 ```{r}
 boxplot(base$ipcf)
