@@ -1,3 +1,5 @@
+#Este script toma
+
 #Enumerar las variables a mantener
 variablesJefatura = c('idHogar',
                       'ch03',
@@ -145,13 +147,76 @@ hogares$nbi5[hogares$idHogar %in% personasNbi5$idHogar] = 1
 rm(personasNbi5,baseJefatura)
 hogares$nbi = as.numeric((hogares$nbi1 + hogares$nbi2 + hogares$nbi3 + hogares$nbi4 + hogares$nbi5)>0)
 
+
+
+
+#Años de escolaridad
+# From questions ch12 and ch13, it's posible to get the same categories there are in CENSUS 
+## para cada uno de los 810 hogares los años del jefe
+## para cada hogar los años del conyuje
+
+source("src/schoolYears.R")
+
+#Establezco los años de escolaridad
+#NO TIENEN DATO EN CH12 Y CH13, PERO EN NIVEL EDUC DICE ALGO. HAY QUE COTEJAR ESTO
+
+personas$aniosEscolaridad = NA
+
+for (i in 1:nrow(personas)) {
+  personas$aniosEscolaridad[i] = aniosEscolaridadCAPECO(personas$ch10[i],personas$ch12[i],personas$ch13[i],personas$ch14[i])
+}
+personas$aniosEscolaridad[personas$aniosEscolaridad>17] = 17
+
+#Hay 3 casos que no saben el nivel al que asistieron o si lo terminaron pero en la variable Nivel_ed aparece dato. 
+
+#a secundario incompleto le doy 8 años
+personas$aniosEscolaridad[is.na(personas$aniosEscolaridad) & personas$nivel_ed == "secundaria incompleta" ] = 8
+#a primario incompleto le doy 7 años
+personas$aniosEscolaridad[is.na(personas$aniosEscolaridad) & personas$nivel_ed == "primaria completa" ] = 7
+
+#Estos son los casos, con componente de hogar 1
+#View(personas[personas$codusu == 261209 | personas$codusu == 311871,])
+
+
+aniosEscolaridadJefe = 
+  personas %>%
+  filter(ch03=="jefe") %>%
+  select(idHogar,aniosEscolaridad)
+names(aniosEscolaridadJefe)[2] = "aniosEscolaridadJefe" 
+
+aniosEscolaridadConyu = 
+  personas %>%
+  filter(ch03=="c\xf3nyuge/pareja") %>%
+  select(idHogar,aniosEscolaridad)
+names(aniosEscolaridadConyu)[2] = "aniosEscolaridadConyu"
+
+
+#Promedio escolaridad
+
+hogares = left_join(hogares, aniosEscolaridadJefe)
+hogares = left_join(hogares, aniosEscolaridadConyu)
+
+rm(aniosEscolaridadJefe,aniosEscolaridadConyu)
+
+hogares$aniosEscoProm = NA
+
+hogares$aniosEscoProm = ifelse(is.na(hogares$aniosEscolaridadConyu),
+                               hogares$aniosEscolaridadJefe,
+                               ((hogares$aniosEscolaridadJefe + hogares$aniosEscolaridadConyu)/2))
+
+#Cuando hay jefatura incompleta se deja del jefe
+
+
 # Índice de Privación Material de los Hogares (IPMH)
-source("src/ipmh.R")
+#source("src/ipmh.R")
+
 #1 CONDHAB
+source("src/condhab.R") #NO FUNCIONA
 hogares = left_join(hogares, condhab)
 rm(condhab)
 
 #2 para cada hogar CAPECO = (CP * VAE) / AE
+source("src/capeco.R")
 hogaresCAPECO = 
   personas %>%
   group_by(idHogar) %>%
@@ -170,30 +235,6 @@ rm(hogaresCAPECO)
 
 
 
-#Años de escolaridad
-# From questions ch12 and ch13, it's posible to get the same categories there are in CENSUS 
-## para cada uno de los 810 hogares los años del jefe
-## para cada hogar los años del conyuje
-
-
-aniosEscolaridadJefe = 
-  personas %>%
-  filter(ch03=="jefe") %>%
-  select(idHogar,aniosEscolaridad)
-names(aniosEscolaridadJefe)[2] = "aniosEscolaridadJefe" 
-
-aniosEscolaridadConyu = 
-  personas %>%
-  filter(ch03=="c\xf3nyuge/pareja") %>%
-  select(idHogar,aniosEscolaridad)
-names(aniosEscolaridadConyu)[2] = "aniosEscolaridadConyu"
-
-
-
-hogares = left_join(hogares, aniosEscolaridadJefe)
-hogares = left_join(hogares, aniosEscolaridadConyu)
-
-rm(aniosEscolaridadJefe,aniosEscolaridadConyu)
 
 #Regimen de posesión de la vivienda
 #Homologar censo y eahu. Censo pregunta:
@@ -210,15 +251,5 @@ rm(aniosEscolaridadJefe,aniosEscolaridadConyu)
 hogares$propietario = as.numeric(hogares$ii7 == 1 |hogares$ii7 == 2 )
 
 
-
-#TIPO DE CASA
-#Calidad de los materiales (INMAT): 
-#Calidad de conexión a servicios básicos (INCALSERV)
-#Casa tipo B: la que cumple por lo menos una de las siguientes condiciones: no tiene provisión de agua por cañería dentro de la vivienda; no dispone de retrete con descarga de agua; tiene piso de tierra u otro material precario. 
-#El resto de las casas es considerado como casas de tipo A. Rancho o casilla: el rancho (propio de áreas rurales) tiene generalmente paredes de adobe, piso de tierra y techo de chapa o paja. La casilla (propia de áreas urbanas) está habitualmente construida con materiales de baja calidad o desecho. Departamento: vivienda con baño y cocina propios, en la que se entra por patios, zaguanes, ascensores, escaleras o pasillos interiores de uso común. Casa de inquilinato: vivienda con salida independiente al exterior construida o remodelada deliberadamente para que tenga varios cuartos con salida a uno o más espacios de uso común. Algunas formas son conocidas como conventillos. Cada casa de inquilinato es una única vivienda en cuyo interior se reconocen los hogares particulares que la habitan. Pensión u hotel: vivienda en donde se alojan en forma permanente hogares particulares en calidad de pensionistas, bajo un régimen especial caracterizado por el pago mensual, quincenal o semanal de su alojamiento. Se incluyen los hoteles o pensiones no turísticos con capacidad menor de quince habitaciones en la Capital Federal y menor de diez en las provincias. Local no construido para habitación: lugar no destinado originariamente a vivienda, pero que estaba habitado el día del Censo. Vivienda móvil: la que puede transportarse a distintos lugares (barco, vagón de ferrocarril, casa rodante, etcétera). Viviendas deficitarias: incluye las casas tipo B y las viviendas precarias. Viviendas precarias: para permitir la comparabilidad entre ambos censos, se consideraron viviendas precarias en 1980 las piezas de inquilinato, los ranchos, las viviendas precarias y otros; en 1991, los ranchos o casillas, los hogares en casa de inquilinato, los locales no construidos para habitación y las viviendas móviles. No se consideraron los hoteles y pensiones. Vivienda sin cañería de agua dentro de la vivienda: incluye tanto a las viviendas cuya provisión de agua es exterior a las mismas pero dentro del lote en que fueron construidas, como a las viviendas que obtienen el agua fuera del terreno en que fueron construidas. Fuente: Situación y Evolución Social (Sintesis Nº4); INDEC.
-#Algunas definiciones afines: Hogares con hacinamiento critico, Viviendas ocupadas y Viviendas particulares
-
-
-#CALMAT
-
+#NACIDO EN ARGENTINA
 

@@ -14,7 +14,7 @@ condhab = select(hogares,
 
 condhab$matcoPiso = NA
 #- SUFICIENTE (S): baldosa, cerámica, plástico, madera, mármol, goma, alfombra o similares
-suficiente = condhab$iv3 == "mosaico/baldosa/madera/cer\xe1mica/alfombra"
+suficiente = condhab$iv3 == "mosaico/baldosa/madera/cerámica/alfombra"
 condhab$matcoPiso[suficiente] = 2 
 
 #- PARCIALMENTE INSUFICIENTE (PI): cemento o ladrillo, y otros
@@ -37,7 +37,7 @@ condhab$matcoTecho = NA
 
 
 #- PARCIALMENTE INSUFICIENTE (PI): teja, baldosa, membrana o capa asfáltica sin cielorraso
-parcialmenteInsuficiente = condhab$iv4 == "membrana/cubierta asf\xe1ltica" |
+parcialmenteInsuficiente = condhab$iv4 == "membrana/cubierta asfáltica" |
   condhab$iv4 == "baldosa/losa sin cubierta" |
   condhab$iv4 == "pizarra/teja"
 condhab$matcoTecho[parcialmenteInsuficiente] = 1
@@ -46,15 +46,15 @@ condhab$matcoTecho[parcialmenteInsuficiente] = 1
 #- INSUFICIENTE (I): madera, cartón, paja o desechos y chapa de metal o fibrocemento sin
 #cielorraso y otros sin cielorraso
 insuficiente = condhab$iv4 == "chapa de metal sin cubierta" |
-  condhab$iv4 == "chapa de fibrocemento/pl\xe1stico" |
-  condhab$iv4 == "chapa de cart\xf3n" |
-  condhab$iv4 == "ca\xf1a/tabla/paja con barro/paja sola"
+  condhab$iv4 == "chapa de fibrocemento/plástico" |
+  condhab$iv4 == "chapa de cartón" |
+  condhab$iv4 == "caña/tabla/paja con barro/paja sola"
 condhab$matcoTecho[insuficiente] = 0
 
 #- SUFICIENTE (S): teja, baldosa, membrana o capa asfáltica con cielorraso y chapa de
 #metal o fibrocemento con cielorraso y otros con cielorraso
 #Esta condicion va l final ya que con solo tener cielo raso va a suficiente
-suficiente = condhab$iv5 == "s\xed" | condhab$iv4 == "n/s. depto. de propiedad horizontal"
+suficiente = condhab$iv5 == "sí" | condhab$iv4 == "n/s. depto. de propiedad horizontal"
 condhab$matcoTecho[suficiente] = 2
 
 
@@ -95,7 +95,7 @@ condhab$matco = factor(condhab$matco,levels = 0:2,
 condhab$consan = NA
 
 #SUFICIENTE: si el hogar dispone de instalación de baño con descarga de agua en el inodoro.
-suficiente = condhab$iv8 == "s\xed" & condhab$iv10 != 3
+suficiente = condhab$iv8 == "sí" & condhab$iv10 != 3
 
 #INSUFICIENTE: si el hogar no dispone de instalación de baño con descarga de agua en el inodoro.
 insuficiente = condhab$iv8 == "no" | condhab$iv10 == 3

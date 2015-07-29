@@ -56,24 +56,23 @@ for (i in 1:nrow(personas)) {
 #hay 244 inactivos mujeres con cp NA
 
 #2.2 VAE
-source("src/schoolYears.R")
-
+# Este pedazo quedo en processing, QUEDA TESTEAR VER SI ANDA CAPECO
+#source("src/schoolYears.R")
 #Establezco los años de escolaridad
 #NO TIENEN DATO EN CH12 Y CH13, PERO EN NIVEL EDUC DICE ALGO. HAY QUE COTEJAR ESTO
+#personas$aniosEscolaridad = NA
 
-personas$aniosEscolaridad = NA
-
-for (i in 1:nrow(personas)) {
-  personas$aniosEscolaridad[i] = aniosEscolaridadCAPECO(personas$ch10[i],personas$ch12[i],personas$ch13[i],personas$ch14[i])
-}
-personas$aniosEscolaridad[personas$aniosEscolaridad>17] = 17
+#for (i in 1:nrow(personas)) {
+#  personas$aniosEscolaridad[i] = aniosEscolaridadCAPECO(personas$ch10[i],personas$ch12[i],personas$ch13[i],personas$ch14[i])
+#}
+#personas$aniosEscolaridad[personas$aniosEscolaridad>17] = 17
 
 #Hay 3 casos que no saben el nivel al que asistieron o si lo terminaron pero en la variable Nivel_ed aparece dato. 
 
 #a secundario incompleto le doy 8 años
-personas$aniosEscolaridad[is.na(personas$aniosEscolaridad) & personas$nivel_ed == "secundaria incompleta" ] = 8
+#personas$aniosEscolaridad[is.na(personas$aniosEscolaridad) & personas$nivel_ed == "secundaria incompleta" ] = 8
 #a primario incompleto le doy 7 años
-personas$aniosEscolaridad[is.na(personas$aniosEscolaridad) & personas$nivel_ed == "primaria completa" ] = 7
+#personas$aniosEscolaridad[is.na(personas$aniosEscolaridad) & personas$nivel_ed == "primaria completa" ] = 7
 
 #Estos son los casos, con componente de hogar 1
 #View(personas[personas$codusu == 261209 | personas$codusu == 311871,])
@@ -105,15 +104,15 @@ adultoEquivalente = function(sexo,edad){
   if (edad == 3) {ae = 0.56}
   if (edad >= 4 & edad <= 6) {ae = 0.63}
   if (edad >= 7 & edad <= 9) {ae = 0.72}
-  if (edad >= 10 & edad <= 12 & sexo == "varon") {ae = 0.83}
-  if (edad >= 13 & edad <= 15 & sexo == "varon") {ae = 0.96}
-  if (edad >= 16 & edad <= 17 & sexo == "varon") {ae = 1.05}
+  if (edad >= 10 & edad <= 12 & sexo == "varón") {ae = 0.83}
+  if (edad >= 13 & edad <= 15 & sexo == "varón") {ae = 0.96}
+  if (edad >= 16 & edad <= 17 & sexo == "varón") {ae = 1.05}
   if (edad >= 10 & edad <= 12 & sexo == "mujer") {ae = 0.73}
   if (edad >= 13 & edad <= 15 & sexo == "mujer") {ae = 0.79}
   if (edad >= 16 & edad <= 17 & sexo == "mujer") {ae = 0.79}
-  if (edad >= 18 & edad <= 29 & sexo == "varon") {ae = 1.06}
-  if (edad >= 30 & edad <= 59 & sexo == "varon") {ae = 1.00}
-  if (edad >= 60 & sexo == "varon") {ae = 0.82}
+  if (edad >= 18 & edad <= 29 & sexo == "varón") {ae = 1.06}
+  if (edad >= 30 & edad <= 59 & sexo == "varón") {ae = 1.00}
+  if (edad >= 60 & sexo == "varón") {ae = 0.82}
   if (edad >= 18 & edad <= 29 & sexo == "mujer") {ae = 0.74}
   if (edad >= 30 & edad <= 59 & sexo == "mujer") {ae = 0.74}
   if (edad >= 60 & sexo == "mujer") {ae = 0.64}
