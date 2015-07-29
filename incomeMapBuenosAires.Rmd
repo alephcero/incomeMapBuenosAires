@@ -4,7 +4,7 @@ author: "Felipe González"
 date: "17 de julio de 2015"
 output: html_document
 ---
-```{r,libraries,message=FALSE}
+```{r,libraries,message=FALSE,echo=FALSE}
 rm(list=ls())
 source("src/libraries.R")
 source("src/functions.R")
@@ -12,15 +12,6 @@ source("src/loadingEAHUdata.R")
 source("src/processingEAHU.R")
 ```
 
-``` {r,dataPreparation,message=FALSE}
-base = select(hogares,idHogar,pondera,ipcf,jefaturaFemenina,jefaturaCompleta,habitanteUnico,hogaresMult,nbi1:nbi,condhab:propietario)
-base$condhab = as.integer(base$condhab)
-
-#Promedio escolaridad
-base$aniosEscoProm = (base$aniosEscolaridadJefe + base$aniosEscolaridadConyu)/2
-#Cuando hay jefatura incompleta se deja del jefe
-base$aniosEscoProm[is.na(base$aniosEscoProm)] = base$aniosEscolaridadJefe
-```
 
 #Introducción
 
@@ -87,35 +78,24 @@ La hipótesis de este trabajo es que, de las variables disponibles tanto en el *
 
 Es por ello que se presume que es necesario el análisis conjunto y complementario de ambos sets de varibles, unas para identificar positivamente los sectores de más altos ingresos y el otro para indentificar positivamente los sectores de menores ingresos.
 
-#Variable proxy del ingreso
+#Variables candidatas como proxy del ingreso
 
 A partir de la **EAHU** se puede determinar el sentido y la fuerza de la relación entre las variables seleccionadas, que también se pueden encontrar en el **Censo**, y el ingreso per cápita familiar, que es el tipo de ingreso seleccionado en este trabajo.  
 
-## Variable ingreso
-
-Un primer análisis descriptivo de la variable regresada, ipcf, permite observar que existen casos extremos con ingresos per cápita 
-
+## Variables individuales presentes en EAHU y Censo
 
 
 ```{r,tablaModelos}
-base = select(hogares,idHogar,pondera,ipcf,jefaturaFemenina,jefaturaCompleta,habitanteUnico,hogaresMult,nbi1:nbi,condhab:propietario)
-base$condhab = as.integer(base$condhab)
+base = select(hogares,ipcf,jefaturaFemenina,jefaturaCompleta,habitanteUnico,hogaresMult,nbi1:nbi,aniosEscolaridad,propietario,jefeNacidoArg)
 
-#Promedio escolaridad
-base$aniosEscoProm = (base$aniosEscolaridadJefe + base$aniosEscolaridadConyu)/2
-#Cuando hay jefatura incompleta se deja del jefe
-base$aniosEscoProm[is.na(base$aniosEscoProm)] = base$aniosEscolaridadJefe
+matrizCorrelaciones = cor(base)
 
-
-matrizCorrelaciones = cor(base[,3:20])
-
-ponderadores = base$pondera
+ponderadores = hogares$pondera
 tablaModelos = data.frame(variable = NA, beta = NA, pbeta = NA, r = NA, pValue = NA)
 
-
-
-for (i in 4:ncol(base)) {
-fit = lm(ipcf ~ .,data=base[,c(3,i)],weights = ponderadores)
+# Recorro creo subases de a una variable a la vez para hacer una tabla de modelos y sus parametros 
+for (i in 2:ncol(base)) {
+fit = lm(ipcf ~ .,data=base[,c(1,i)],weights = ponderadores)
 f <- summary(fit)$fstatistic
 tablaModelosInsumo = data.frame(
   variable = names(fit$coefficients[2]), 
@@ -125,24 +105,98 @@ tablaModelosInsumo = data.frame(
   pValue = pf(f[1],f[2],f[3],lower.tail=F))
 tablaModelos = rbind(tablaModelos,tablaModelosInsumo)
 }
+tablaModelos = tablaModelos[2:nrow(tablaModelos),]
 ```
 
+De esta tabla se puede extraer como conclusión que de todos los modelos lineales simples, los años de escolaridad en el hogar (construido a partir de los años de escolaridad del jefe y/o cónyuge ) es la variable que explica la mayor variabilidad del ingreso y, al mismo tiempo, la mayor significatividad estadística al aportar el menor *p-value*. El sentido de la relación, como es de esperar, es positivo de modo que a mayor cantidad de años de escolaridad del jefe y/o cónyuge del hogar, es de esperar un ingreso mayor en ese hogar. También es necesario considerar la presencia en el hogar de algún indicador de NBI, que hacen referenia a las condiciones habitacionales y de insfraestructura de los hogares, como una variable relacionada en sentido negativo con el ingreso del hogar (aunque en magnitudes menos significativas que *Años de escolaridad*, así como también con mayores, aunque aceptales, niveles de error)
 
+Por último, también es importante considerar la nacionalidad del jefe de hogar, dado que se espera una relación negativa (aunque de intensidad poco significativa) entre la condición de inmigrante del jefe y el ingreso del hogar.
+
+## Indicadores construidos a partir de variables presentes en EAHU y Censo
+
+A priori, se puede comenzar a fundamentar algunas presunciones tomadas al inicio del trabajo. En primer lugar, el grado de desarrollo urbano de la Ciudad de Buenos Aires, hace que aquellos indicadores que la bibliografía asume como negativamente vinculados con el ingreso (como los resumidos en los diferentes componentes del NBI) no tengan suficiente significatividad económica ni estadística. De modo que si bien puedan ser útiles para poder identificar y georeferenciar nichos de pobreza estructural, no sirven para identificar el otro extremo de la distribución del ingreso.
+
+Complementariamente, los años de escolaridad se presentan como la variable más significativa para una identificación positiva de los sectores de latos ingresos. Pero un modelo de regresión lineal simple de ingreso sobre esta variable, explica muy poco de la variabilidad de los ingresos. Es por eso que es necesario la utilización de otra serie de indicadores construidos a partir de las variables simples que permitan un mejor análisis.
 
 
 ```{r}
-boxplot(base$ipcf)
-boxplot(base$capeco)
+#1 CONDHAB
+source("src/condhab.R") #NO FUNCIONA
+hogares = left_join(hogares, condhab)
+rm(condhab)
+
+#2 para cada hogar CAPECO = (CP * VAE) / AE
+source("src/capeco.R")
+hogaresCAPECO = 
+  personas %>%
+  group_by(idHogar) %>%
+  summarise(capeco = sum(cp * vae)/sum(adultoEquivalente))
+
+hogares = left_join(hogares, hogaresCAPECO)
+
+capecoPersonas = select(hogares,idHogar,capeco)
+
+personas = left_join(personas,capecoPersonas)
+
+capecoPersonas = arrange(personas,capeco,desc(ipcf),idHogar)
+
+rm(hogaresCAPECO)
+
+```
+
+La búsqueda de indicadores de ingresos corrientes para referir a los aspectos menos estructurales de la pobreza y, de algún modo compatibilizar las encuestas urbanas de ocupación e ingreso con las variables censales, ha sido una preocupación en años anteriores. 
+
+para eso se desarrollaron indicadores como CONDAHB capeco explicacion
+
+```{r,tablaModelos}
+base = select(hogares,ipcf,capeco,condhab)
+base$condhab = as.numeric(base$condhab)
+
+matrizCorrelaciones = cor(base)
+
+tablaModelos2 = data.frame(variable = NA, beta = NA, pbeta = NA, r = NA, pValue = NA)
+
+# Recorro creo subases de a una variable a la vez para hacer una tabla de modelos y sus parametros 
+for (i in 2:ncol(base)) {
+fit = lm(ipcf ~ .,data=base[,c(1,i)],weights = ponderadores)
+f <- summary(fit)$fstatistic
+tablaModelosInsumo2 = data.frame(
+  variable = names(fit$coefficients[2]), 
+  beta = fit$coefficients[2], 
+  pbeta = coef(summary(fit))[2,4], 
+  r = summary(fit)$adj.r.squared, 
+  pValue = pf(f[1],f[2],f[3],lower.tail=F))
+tablaModelos2 = rbind(tablaModelos2,tablaModelosInsumo2)
+}
+tablaModelos2 = tablaModelos[2:nrow(tablaModelos2),]
+```
+
+Se observa que capeco es un mucho mejor candidato como variable única a la hora de detectar sectores de altos ingresos, mientras que condhab es menos competitiva que algun indicador de nbi
+
+```{r}
 with(base,plot(capeco,ipcf))
 ```
 
 ```{r}
-base = base[base$ipcf<15000,]
+fit = lm(ipcf ~ capeco, data = hogares, weights = pondera)
+summary(fit)
+plot(fit)
+```
+
+
+Ajustes
+
+se observan outliers que se explican claramente por el ingreso. son aquellos que ganan mas de 15000 per capita
+
+```{r, modelo ajustado}
+outliers.ipcf = hogares$ipcf>15000
+hogaresSinOut = hogares[!outliers.ipcf,]
 ```
 
 ```{r}
-fit = lm(ipcf ~ capeco, data = base, weights = pondera)
-summary(fit)
+fit2 = lm(ipcf ~ capeco, data = hogaresSinOut, weights = pondera)
+summary(fit2)
+plot(fit2)
 ```
 
 #Variable en el Censo 2010: análisis y distribución
