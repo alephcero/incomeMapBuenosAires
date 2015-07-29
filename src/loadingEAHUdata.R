@@ -127,7 +127,7 @@ hogares$iv10 = factor(hogares$iv10,levels = 1:3,labels = c("Inodoro con botón /
                                                            "Letrina (sin arrastre de agua)"))
 
 
-hogares$iv11[hogAares$iv11=="0"] = NA
+hogares$iv11[hogares$iv11=="0"] = NA
 
 hogares$iv11 = factor(hogares$iv11,levels = 1:4,labels = c("A red pública (cloaca)",
                                                            "A cámara séptica y pozo ciego",
@@ -162,4 +162,5 @@ hogares$ii8 = factor(hogares$ii8,levels = 1:4,labels = c("Gas de red",
 #Personas
 #Sexo
 personas$ch04 = pasarAutf8(personas$ch04)
-
+personas$ch03 = pasarAutf8(personas$ch03)
+personas$ch15 = pasarAutf8(personas$ch15)

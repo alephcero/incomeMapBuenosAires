@@ -36,7 +36,7 @@ hogares$jefaturaFemenina[is.na(hogares$jefaturaFemenina)] = 0
 insumo = group_by(baseJefatura,idHogar)
 #Detectar la presencia de jefatura completas via la presencia del conyuge
 insumo = summarise(insumo,
-          jefaturaCompleta = sum(ch03 == 'c\xf3nyuge/pareja')
+          jefaturaCompleta = sum(ch03 == 'cónyuge/pareja')
           )
 
 #Hacer el join
@@ -186,7 +186,7 @@ names(aniosEscolaridadJefe)[2] = "aniosEscolaridadJefe"
 
 aniosEscolaridadConyu = 
   personas %>%
-  filter(ch03=="c\xf3nyuge/pareja") %>%
+  filter(ch03=="cónyuge/pareja") %>%
   select(idHogar,aniosEscolaridad)
 names(aniosEscolaridadConyu)[2] = "aniosEscolaridadConyu"
 
@@ -198,58 +198,41 @@ hogares = left_join(hogares, aniosEscolaridadConyu)
 
 rm(aniosEscolaridadJefe,aniosEscolaridadConyu)
 
-hogares$aniosEscoProm = NA
+hogares$aniosEscolaridad = NA
 
-hogares$aniosEscoProm = ifelse(is.na(hogares$aniosEscolaridadConyu),
+hogares$aniosEscolaridad = ifelse(is.na(hogares$aniosEscolaridadConyu),
                                hogares$aniosEscolaridadJefe,
-                               ((hogares$aniosEscolaridadJefe + hogares$aniosEscolaridadConyu)/2))
+                               ifelse(hogares$aniosEscolaridadJefe > hogares$aniosEscolaridadConyu,
+                                      hogares$aniosEscolaridadJefe,
+                                      hogares$aniosEscolaridadConyu)
+                               )
+                               
 
 #Cuando hay jefatura incompleta se deja del jefe
 
 
-# Índice de Privación Material de los Hogares (IPMH)
-#source("src/ipmh.R")
 
-#1 CONDHAB
-source("src/condhab.R") #NO FUNCIONA
-hogares = left_join(hogares, condhab)
-rm(condhab)
-
-#2 para cada hogar CAPECO = (CP * VAE) / AE
-source("src/capeco.R")
-hogaresCAPECO = 
-  personas %>%
-  group_by(idHogar) %>%
-  summarise(capeco = sum(cp * vae)/sum(adultoEquivalente))
-
-hogares = left_join(hogares, hogaresCAPECO)
-
-capecoPersonas = select(hogares,idHogar,capeco)
-
-personas = left_join(personas,capecoPersonas)
-
-capecoPersonas = arrange(personas,capeco,desc(ipcf),idHogar)
-
-rm(hogaresCAPECO)
-
-
-
-
-
-#Regimen de posesión de la vivienda
-#Homologar censo y eahu. Censo pregunta:
-#La vivienda que ocupa este hogar, ¿es...
-#ropia?
-#alquilada?
-#prestada?
-#cedida por trabajo?
-#Otra situación
 
 
 #Propietario de la vivienda
 
-hogares$propietario = as.numeric(hogares$ii7 == 1 |hogares$ii7 == 2 )
+hogares$propietario = as.numeric(hogares$ii7 == "Propietario de la vivienda y el terreno" | hogares$ii7 == "Propietario de la vivienda solamente")
+hogares$propietario[is.na(hogares$propietario)] = 0
 
 
 #NACIDO EN ARGENTINA
+
+hogaresJefeArg = 
+  personas %>%
+  group_by(idHogar) %>%
+  filter(ch03 == "jefe" & (ch15 == "en esta localidad" | ch15 == "en otra localidad" | ch15 == "en otra provincia (especificar)")) %>%
+  summarise(jefeNacidoArg = 1) %>%
+  select(idHogar,jefeNacidoArg)
+
+hogares = left_join(hogares, hogaresJefeArg)
+hogares$jefeNacidoArg[is.na(hogares$jefeNacidoArg)] = 0
+rm(hogaresJefeArg)
+
+
+
 
