@@ -67,16 +67,16 @@ hogares = left_join(hogares, totalPersonas)
 
 rm(totalPersonas)
 
-#ii1 ¿Cuántos ambientes / habitaciones tiene este hogar para su uso exclusivo?
-#ii2 De esos, ¿cuántos usan habitualmente para dormir?
-
-hogares$hacinamiento = hogares$totalMiembros/hogares$ii1
-
 #VIVIENDA CON MAS DE UN HOGAR
 hogares$hogaresMult = as.numeric(hogares$nro_hogar > 1)
 
 
 #NBI - Necesidades Básicas Insatisfechas
+#ii1 ¿Cuántos ambientes / habitaciones tiene este hogar para su uso exclusivo?
+#ii2 De esos, ¿cuántos usan habitualmente para dormir?
+hogares$hacinamiento = hogares$totalMiembros/hogares$ii1
+
+
 #Al menos uno de los siguientes indicadores de privación: 
      
 #  Hacinamiento (NBI 1): hogares con más de tres personas por cuarto.
