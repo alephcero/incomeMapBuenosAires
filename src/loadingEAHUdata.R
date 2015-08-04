@@ -90,13 +90,6 @@ hogares$idHogar = factor(hogares$idHogar)
 #RECODIFICACIÓN DE VARIABLES CON PROBLEMAS DE ENCODING
 
 #Hogares
-pasarAutf8 = function(texto.factor) {
-  etiquetas = levels(texto.factor)
-  etiquetas = iconv(etiquetas, "latin1", "utf-8")
-  texto.factor = iconv(texto.factor, "latin1", "utf-8")
-  texto.factor = factor(texto.factor,levels = etiquetas)
-  texto.factor
-} 
 
 hogares$iv1 = pasarAutf8(hogares$iv1)
 
