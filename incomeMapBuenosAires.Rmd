@@ -2,9 +2,16 @@
 title: "Mapeo de la distribución del ingreso en la Ciudad de Buenos Aires"
 author: "Felipe González"
 date: "17 de julio de 2015"
-output: html_document
+output: pdf_document
 ---
-```{r,libraries,message=FALSE,echo=FALSE}
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE,fig.width=6, fig.height=4)
+.pardefault <- par(no.readonly = T)
+```
+
+
+#Introducción
+```{r libraries,message=FALSE,echo=FALSE}
 rm(list=ls())
 source("src/libraries.R")
 source("src/functions.R")
@@ -13,31 +20,93 @@ source("src/processingEAHU.R")
 ```
 
 
-#Introducción
+El propósito de este trabajo es mapear la distribución del ingreso per cápita familiar en la Ciudad de Buenos Aires. El análisis de la distribución del ingreso en su dimensión espacial aporta una perspectiva que enriquece el análisis y puede utilizarse más adelante como insumo para otros análisis (como puede ser por ejemplo la relación entre esta distribución y la topografía de las redes de servicios públicos provistos por un municipio, o su recaudación impositiva segregada por barrios). Se selecciona el ingreso per cápita familiar por considerarse al más acertado para esos análisis ulteriores propuestos en la medida en que es el fundamento de las decisiones de económicas del hogar. De aquí en más cuando en el trabajo se hable de ingreso, se habla del ingreso per cápita familiar (*ipcf*).
 
-El propósito de este trabajo es mapear la distribución del ingreso en la Ciudad de Buenos Aires. El análisis de la distribución del ingreso en su dimensión espacial arroja otra perspectiva que enriquece el análisis y puede utilizarse más adelante como insumo para otros análisis (como puede ser por ejemplo la relación entre esta distribución y la topografía de las redes de servicios públicos provistos por un municipio, o su recaudación impositiva segregada por barrios).
+Para la construcción del mapa de ingreso en la Ciudad de Buenos Aires, se utilizará el Censo Nacional de Población, Hogares y Viviendas de 2010 (**Censo** de aquí en más), dado que es la única fuente estadística que ofrece información desagregada a un nivel geográfico lo suficientemente específico como para realizar mapas que sean significativos. Lamentablemente, el Censo no pregunta por ingreso de manera directa, con lo cual el desafío radica en proponer un proceso que permita a partir de las variables existentes en el **Censo**, llegar a un proxy del ingreso del hogar.
 
-Para ello, se utilizará el Censo Nacional de Hogares y Población de 2010 (Censo de aquí en más), dado que es la única fuente estadística que ofrece información desagregada a un nivel geográfico lo suficientemente específico como para realizar mapas que sean significativos. Lamentablemente, el Censo no pregunta por ingreso de manera directa, con lo cual el desafío radica en proponer un proceso que permita a partir de las variables existentes en el censo, llegar a un proxy del ingreso del hogar.
-
-La Encuesta Anual de Hogares Urbanos (EAHU) permite validar la relación existente entre determinadas variables a seleccionar y el ingreso del hogar (los diferentes tipos de ingresos). Esta base a su vez, no ofrece niveles de desagregación geográficos útiles, más allá de grandes aglomerados urbanos. Es por ello que el uso complementario de ambas puede llevar a alcanzar el objetivo deseado.
+Por su lado, la Encuesta Anual de Hogares Urbanos (**EAHU**), con diseño muestral pero de muy amplia cobertura, sí pregunta por los diferentes ingresos del hogar. Sin embargo no ofrece niveles de desagregación geográficos útiles, más allá de grandes aglomerados urbanos. Es por ello que el uso complementario de ambas puede llevar a alcanzar el objetivo deseado. Mediante la **EAHU** se puede observar las posibles relaciones existentes entre determinadas variables equivalentes en **Censo** y en **EAHU** a seleccionar y el ingreso del hogar.
 
 Con este objetivo principal como norte, el trabajo presenta los siguiente objetivos secundarios:
 
-- Analizar las variables disponibles en el Censo 2010 y la EAHU del tercer trimestre del 2010 y comparar las variables que ambas tienen en común y las diferencias que pueda llegar a haber hacia el interior de cada una
-- Determinar, entre las variables que comparten el Censo y la EAHU, cual de ellas (ya sea en modo individual o como combinatoria de las mismas en un índice o indicador) presenta la mayor relación con el ingreso
-- Obtener del Censo 2010 los valores para esa variable (individual o compuesta) a nivel de radio censal
+- Analizar las variables disponibles en el **Censo 2010** y la **EAHU** del tercer trimestre del 2010 y comparar las variables que ambas tienen en común y las diferencias que pueda llegar a haber hacia el interior de cada una
+- Determinar, entre las variables que comparten el Censo y la EAHU, cuál de ellas (ya sea en modo individual o como combinatoria de las mismas en un índice o indicador) presenta la mayor relación con el ingreso
+- Obtener del **Censo** los valores para esa variable (individual o compuesta) a nivel de radio censal
 - Mapear esa variable en mapa de la Ciudad Autónoma de Buenos Aires
 - Esbozar un primer análisis del mapa del ingreso de la Ciudad 
+- Facilitar y asegurar la reproducibilidad y fiscalización de los resultados, proveyendo de los datos y de los códigos fuentes de software que arrojaron esos datos.
 
 #El ingreso en la Ciudad de Buenos Aires
 
-- Medir el GDB 2010 per capita y comparar con las otras provincias
-- Comparar gini para todas las areas urbanas por provincia
-- Especificar que vamos a hablar de ingreso per capita familiar
+La Ciudad de Buenos Aires es el distrito nacional con el Producto Bruto Geografico (PBG) per cápita más alto del pais. Relizar esta comparación es algo dificultosa ya que no todos los distritos del pais informan su PBG  para todos los años ni con los mismos precios. La Dirección de Estadísticas e Investigaciones Económicas de Mendoza realizó un trabajo comparativo[^pbgCABA] que sirve como fuente para presentar datos comparados para 2010. Estos resultados se resumen en el **Cuadro 1**.
+
+[^pbgCABA]:Fuente: http://www.deie.mendoza.gov.ar/publicaciones/mendozaencontexto/pbg/pbgmc.xls
+
+**CUADRO 1. Producto bruto regional per capita por provincias**
+
+| **Provincia**         | **Población** |**PBG**|**PBG per capita**|
+|-----------------------|---------------|-------|------------------|
+|Ciudad de Buenos Aires |	2890151       |	136078|	            0.047|
+|Neuquén                |	551266        |	13148 |	            0.024|
+|Santa Fe               |	3194537       |	32593 |	            0.010|
+|Chubut                 |	509108        |	5023  |	            0.010|
+|Buenos Aires           |	15625084      |	153620|	            0.010|
+|Córdoba                |	3308876       |	30265 |	            0.009|
+|Mendoza                |	1738929       |	15514 |	            0.009|
+|La Rioja               |	333642        |	2602  |	            0.008|
+|San Juan               |	681055        |	5176  |	            0.008|
+|Entre Ríos             |	1235994       |	9249  |	            0.007|
+|Corrientes             |	992595        |	5112  |	            0.005|
+
+PBG a precios de mercado en millones de pesos de 1993. 
+
+La magnitud del PBG de la Ciudad es a su vez comparable con el de países desarrollados como Israel, España o Grecia [^comparacionMundial]. En la comparación de ciudades y utilizando paridad de poder de compra (ppp)[^comparacionCiudades] , una comparación más justa, Buenos Aires (23.606 USDppp) se puede ubicar junto a ciudades de la región como Santiago de Chile (23.929 USDppp) o Sao Paulo en Brasil (20.650 USDppp) pero también por encima de grandes ciudades de paises desarrollados como Porto en Portugal (21.674 USDppp) o Napoli en Italia (19.451 USDppp). Incluso no se encuentra muy lejos de ciudades como Lile en Francia (30.259 USDppp) o Newcastle en Inglaterra (29.978 USDppp).
+
+[^comparacionMundial]:World Economic Outlook Database-April 2015 
+[^comparacionCiudades]:http://www.brookings.edu/research/reports2/2015/01/22-global-metro-monitor
+
+A la hora de analizar la distribución del ingreso con otro grandes aglomerados urbanos del país se observa que la Ciudad de Buenos Aires es el décimo aglomerado urbano en el ranking de distirbución del ingreso de acuerdo al índice de Gini. Esta posición mejora si no se toman en consideración los agrupamientos de aglomerados de toda una provincia que realiza la EAHU. En ese caso, Buenos Aires sería superada en districión equitativa del ingreso solo por 6 aglomerados urbanos.
+
+```{r gini,comment=""}
+hogaresGini = read.dta("data/EAHU/Hogar_EAHU_10.dta")
+hogaresGini$subdominio = pasarAutf8(hogaresGini$subdominio)
+tablaGini = select(hogaresGini,subdominio,ipcf,pondera) %>%
+  group_by(subdominio) %>%
+  summarise(gini = gini(ipcf,weights = pondera)) %>%
+  arrange(gini)
+
+tablaGini = tablaGini[1:grep("ciudad de buenos aires",tablaGini$subdominio),]
+tablaGiniX = xtable(tablaGini,digits = c(3))
+
+```
+
+**Aglomerados urbanos de la EAHU según indice de Gini del Igreso per cápita familiar**
+```{r tablaGiniPrintX,results='asis'}
+print.xtable(tablaGiniX,include.rownames=FALSE,type="latex")
+```
+
+```{r tablaGiniPrint,comment="",fig.align='center'}
+#tablaGini
+```
+
+Adentrándose en el análisis de la variable ingreso hacia el interior de la Ciudad, tal cual la registra la **EAHU**, se puede observar una variable de distrbiución claramente asimétrica con la mayoría de los valores registrados en los valores inferiores de la variable. Al observar la distribución por cuartiles, se observa que la mitad de los hogares tienen un ingreso menor a los 2 mil pesos mensuales y solo el 25% superior supera los $3.500.
+
+**Cuartiles de ingreso per cápita familiar - Ciudad de Buenos Aires 2010** 
+```{r survey}
+hogaresM <- svydesign(ids = ~1, data = hogares, weights = hogares$pondera)
+svyquantile(~ipcf,hogaresM,c(.25,.5,.75))
+```
+
+A la hora de observar su distribución con el fin de detectar casos extremos que puedan impactar en el análisis, se puede observar que hay algunos casos que exigen mayor atención a la hora de incluirlos en el análisis puesto que pueden perturbar el mismo. Se puede afirmar a priori, pero con cierta confianza y que se verificará más adelante en el trabajo, que aquellos hogares con ingresos superiores a 15 mil pesos per cápita constituyen casos extremos.
+
+**Ingreso per cápita familiar - Ciudad de Buenos Aires 2010**
+```{r surveyPlots,fig.align='center'}
+svyboxplot(ipcf~1,hogaresM,all.outliers=TRUE)
+```
+
 
 #Variables comunes al Censo 2010 y EAHU
 
-La **Tabla Nº 1** resume las variables que tanto **Censo** como **EAHU** miden y que serán utilizadas en este trabajo para intentar realizar una estimación de la distribución espacial del ingreso. 
+El siguiente cuadro resume las variables que tanto **Censo** como **EAHU** miden y que serán utilizadas en este trabajo para intentar realizar una estimación de la distribución espacial del ingreso. 
 
 
 | **CENSO**                                                    | **EAHU**      |
@@ -51,7 +120,7 @@ La **Tabla Nº 1** resume las variables que tanto **Censo** como **EAHU** miden 
 | H08 - Tenencia de agua                                       | IV6 - Tenencia de agua|
 | H09 - Procedencia del agua para beber y cocinar              | IV7 – Fuente de agua|
 | H10 - Tiene baño o letrina                                   | IV8 - Tiene baño o letrina|
-| H11 - Tiene botón, cadena, mochila para limpieza del inodoro | IV10 - Tiene botón, cadena, mochila para limpieza del inodoro|
+| H11 - Descarga para limpieza del inodoro                     | IV10 - Descarga para limpieza del inodoro|
 | H12 - Desagüe del inodoro                                    | IV11 - Desagüe del inodoro |
 | H14 - Combustible usado principalmente para cocinar          | II8 - Combustible utilizado para cocinar |
 | PROP - Tenencia de la vivienda y propiedad del terreno       | II7 - Régimen de tenencia |
@@ -68,24 +137,23 @@ La **Tabla Nº 1** resume las variables que tanto **Censo** como **EAHU** miden 
 | CONDACT - Condición de actividad                             | ESTADO - Condición de actividad      |
 
 
-En la medida en que Buenos Aires presenta el mayor nivel de ingreso per cápita, así como también es un espacio urbano consolidado ya que es una de las ciudades cuyo proceso de urbanización data de los tiempos de la colonia, es de esperar que algunas variables vinculadas a aspectos de la pobreza estructural no tengan tanta incidencia. 
+En la medida en que Buenos Aires presenta el mayor nivel de ingreso per cápita del país, así como también conforma un espacio urbano consolidado al ser una de las ciudades cuyo proceso de urbanización data de los tiempos de la colonia, es de esperar que algunas variables vinculadas a aspectos de la pobreza estructural no tengan tanta incidencia. 
 
-Un ejemplo de ello es la fuente de procedencia del agua donde todos los hogares tienen agua corriente. E incluso son una minoría (el `r round(prop.table(xtabs(pondera ~ iv8 ,hogares))[[2]]*100,2)`%) los que no tienen baño o solo el `r round(prop.table(xtabs(pondera ~ iv6 ,hogares))[[2]]*100,2)`% el que tiene agua por fuera de la vivienda. En este sentido, no es esperable que estas variables sirvan como proxy para una variable con mucha variabilidad como el ingreso en la Ciudad de Buenos Aires.
+Un ejemplo de ello es la fuente de procedencia del agua, variable que muestra que todos los hogares tienen agua corriente. E incluso son una minoría (el `r round(prop.table(xtabs(pondera ~ iv8 ,hogares))[[2]]*100,2)`%) los que no tienen baño o solo el `r round(prop.table(xtabs(pondera ~ iv6 ,hogares))[[2]]*100,2)`% el que tiene agua por fuera de la vivienda. En este sentido, no es esperable que estas variables sirvan como proxy para una variable con mucha variabilidad como el ingreso en la Ciudad de Buenos Aires.
 
 Por otro lado, las variables que hacen a los materiales de la vivienda o al mecanismo de disposición de desechos en el baño, presentan mayor variabilidad y puede ser que esten relacionadas con el ingreso. Sin embargo, este set de variables es de esperar que solamente sirva para distinguir positivamente sectores de bajos ingresos, más no así para permitir la georeferenciación de los sectores de altos ingresos. Mientras que la ausencia de baño con desagüe o de calidad suficiente en el techo o piso de la vivienda podría ser un claro indicador de un hogar con bajos ingresos, hacia el interior de los hogares con presencia de ambas condiciones puede existir una dispersión de ingresos significativa. Es decir, mientras que la ausencia de estas condiciones básicas serían suficientes para considerar un hogar como de bajos ingresos, su presencia es necesaria más no suficiente para considerar a un hogar como de altos ingresos.
 
-La hipótesis de este trabajo es que, de las variables disponibles tanto en el **Censo** como en la **EAHU**, son aquellas vinculadas a los años de escolaridad, a la condición de actividad y a la conformación del hogar las que mayor relación presentan con el ingreso de modo que nos permitan poder determinar caracterizar a un hogar como de altos ingresos. Sin embargo, es de esperar que, mientras que este conjunto de variables pueda servir para la identificación del extremo superior de la escala de ingresos, no sea tan sensible con respecto al segmento inferior.
+La hipótesis de este trabajo es que, de las variables disponibles tanto en el **Censo** como en la **EAHU**, son aquellas vinculadas a los años de escolaridad, a la condición de actividad y a la conformación del hogar las que mayor relación pueden presentar con el ingreso de modo que nos permitan poder determinar caracterizar a un hogar como de altos ingresos. Sin embargo, es de esperar que, mientras que este conjunto de variables pueda servir para la identificación del extremo superior de la escala de ingresos, no sea tan sensible con respecto al segmento inferior.
 
 Es por ello que se presume que es necesario el análisis conjunto y complementario de ambos sets de varibles, unas para identificar positivamente los sectores de más altos ingresos y el otro para indentificar positivamente los sectores de menores ingresos.
 
 #Variables candidatas como proxy del ingreso
 
-A partir de la **EAHU** se puede determinar el sentido y la fuerza de la relación entre las variables seleccionadas, que también se pueden encontrar en el **Censo**, y el ingreso per cápita familiar, que es el tipo de ingreso seleccionado en este trabajo.  
+A partir de la **EAHU** se puede determinar el sentido y la fuerza de la relación entre las variables seleccionadas, que también se pueden encontrar en el **Censo**, y el ingreso per cápita familiar, que es el tipo de ingreso seleccionado en este trabajo. Para ello se testea cada variable seleccionada como regresor en un modelo de regresión lineal simple contra el ingreso, y se registran sus parámetros de interés. Por un lado se toma en cuenta aquellas variables que se presumen guardar alguna relación con el ingreso como conformación del hogar o características del jefe de hogar y/o cónyuge. Las variables vinculadas a las condiciones edilicias se toman no aisladamente sino como componentes del indicador NBI. Otras, dada su escasa variabilidad en el contexto urbano de la Ciudad ya mencionado, se omiten directamente. 
 
 ## Variables individuales presentes en EAHU y Censo
 
-
-```{r,tablaModelos}
+```{r tablaModelos}
 base = select(hogares,ipcf,jefaturaFemenina,jefaturaCompleta,habitanteUnico,hogaresMult,nbi1:nbi,aniosEscolaridad,propietario,jefeNacidoArg)
 
 matrizCorrelaciones = cor(base)
@@ -105,27 +173,84 @@ tablaModelosInsumo = data.frame(
   pValue = pf(f[1],f[2],f[3],lower.tail=F))
 tablaModelos = rbind(tablaModelos,tablaModelosInsumo)
 }
+
 tablaModelos = tablaModelos[2:nrow(tablaModelos),]
+
+tablaModelosX = xtable(tablaModelos,digits=c(3))
 ```
 
-De esta tabla se puede extraer como conclusión que de todos los modelos lineales simples, los años de escolaridad en el hogar (construido a partir de los años de escolaridad del jefe y/o cónyuge ) es la variable que explica la mayor variabilidad del ingreso y, al mismo tiempo, la mayor significatividad estadística al aportar el menor *p-value*. El sentido de la relación, como es de esperar, es positivo de modo que a mayor cantidad de años de escolaridad del jefe y/o cónyuge del hogar, es de esperar un ingreso mayor en ese hogar. También es necesario considerar la presencia en el hogar de algún indicador de NBI, que hacen referenia a las condiciones habitacionales y de insfraestructura de los hogares, como una variable relacionada en sentido negativo con el ingreso del hogar (aunque en magnitudes menos significativas que *Años de escolaridad*, así como también con mayores, aunque aceptales, niveles de error)
+```{r printTablaModelosX,results="asis",fig.align="center"}
+print.xtable(tablaModelosX,include.rownames=FALSE,type="latex")
+```
 
-Por último, también es importante considerar la nacionalidad del jefe de hogar, dado que se espera una relación negativa (aunque de intensidad poco significativa) entre la condición de inmigrante del jefe y el ingreso del hogar.
+```{r printTablaModelos,comment="",fig.align='center'}
+#tablaModelos
+```
+
+
+De esta tabla se puede extraer como conclusión que, de todos los modelos lineales simples, los años de escolaridad en el hogar (construido a partir de los años de escolaridad del jefe y/o cónyuge ) es la variable que explica la mayor variabilidad del ingreso y, al mismo tiempo, la mayor significatividad estadística al aportar el menor *p-value*. El sentido de la relación, como es de esperar, es positivo de modo que a mayor cantidad de años de escolaridad del jefe y/o cónyuge del hogar, es de esperar un ingreso mayor en ese hogar. También es necesario considerar la presencia en el hogar de algún indicador de NBI, que hacen referencia a las condiciones habitacionales y de insfraestructura de los hogares, como una variable relacionada en sentido negativo con el ingreso del hogar (aunque en magnitudes menos significativas que *Años de escolaridad*, así como también con mayores, aunque aceptales, niveles de error).
+
+Por último, también aparece como significativa la nacionalidad del jefe de hogar, dado que se espera una relación negativa (aunque de intensidad poco significativa) entre la condición de inmigrante del jefe y el ingreso del hogar.
 
 ## Indicadores construidos a partir de variables presentes en EAHU y Censo
 
 A priori, se puede comenzar a fundamentar algunas presunciones tomadas al inicio del trabajo. En primer lugar, el grado de desarrollo urbano de la Ciudad de Buenos Aires, hace que aquellos indicadores que la bibliografía asume como negativamente vinculados con el ingreso (como los resumidos en los diferentes componentes del NBI) no tengan suficiente significatividad económica ni estadística. De modo que si bien puedan ser útiles para poder identificar y georeferenciar nichos de pobreza estructural, no sirven para identificar el otro extremo de la distribución del ingreso.
 
-Complementariamente, los años de escolaridad se presentan como la variable más significativa para una identificación positiva de los sectores de latos ingresos. Pero un modelo de regresión lineal simple de ingreso sobre esta variable, explica muy poco de la variabilidad de los ingresos. Es por eso que es necesario la utilización de otra serie de indicadores construidos a partir de las variables simples que permitan un mejor análisis.
+Complementariamente, los años de escolaridad se presentan como la variable más significativa para una identificación positiva de los sectores de altos ingresos. Pero un modelo de regresión lineal simple de ingreso sobre esta variable, explica muy poco de la variabilidad de los ingresos. Es por eso que es necesario la utilización de otra serie de indicadores construidos a partir de las variables simples que permitan un mejor análisis.
+
+La búsqueda de indicadores para la estimación del ingreso en unidades geográficas pequeñas, complementando encuestas de ingresos y censos, llevó al INDEC a la elabración de un indicador denominado **Indice de Privación Material de los Hogares (IPMH)**, compuesto a su vez de 2 sub-indicadores:
 
 
-```{r}
+* *Condiciones Habitacionales (CONDHAB)*
+    
+    + Material predominante de los pisos interiores
+    
+    + Material predominante de la cubierta externa de los techos
+    
+    + Presencia de revestimiento o Cielorraso en la parte interior de los techos
+    
+    + Tenencia de instalación de baño con arrastre de en el inodoro
+
+    *CONDHAB* reagrupa los tres indicadores detallados, adoptando como criterio para la aproximación del nivel de calidad de los mismos, la durabilidad y aislamiento que proporcionan los distintos materiales, entendiendo que algunos son más aptos que otros y que ofrecen distintas condiciones de habitabilidad. El producto final es una varible ordinal con categorías: *Suficiente*, *Parcialmente insuficiente* e *Insuficiente*. Finalmente para construir CONDHAB se toma el indicador “Tenencia de instalación de baño con arrastre de en el inodoro” que se considera *Insuficiente* si el hogar no dispone de instalación de baño con descarga de agua en el inodoro. Finalmente se considera que la vivienda presenta condiciones habitacionales INSUFICIENTES cuando sus materiales constructivos o sus instalaciones sanitarias se encuentran por debajo de la norma.
+
+
+```{r condhab}
 #1 CONDHAB
-source("src/condhab.R") #NO FUNCIONA
+source("src/condhab.R") 
 hogares = left_join(hogares, condhab)
 rm(condhab)
+```
 
-#2 para cada hogar CAPECO = (CP * VAE) / AE
+
+* *Capacidad Económica (CAPECO)*
+
+    + Condición de ocupación de los miembros del hogar
+  
+    + Años de escolaridad de los miembros del hogar
+  
+    + Tamaño familiar en Adultos Equivalentes
+
+    CAPECO surge a partir de la modelización en una única ecuación los incrementos porcentuales en los ingresos laborales debidos a un incremento marginal en los años de escolaridad a partir de una función continua con pendientes diferenciales por nivel educativo. El trabajo del INDEC incluye las variables de sexo, edad y lugar de residencia como explicativas de los diferenciales de ingreso a través de un conjunto de 35 dummies que reflejan todas las combinaciones posibles entre las tres variables, asumiendo que existen relaciones entre éstas. Esta última alternativa fue la seleccionada por considerarse que las diferencias de los ingresos entre sexos, por ejemplo, no son uniformes a través de las distintas regiones geográficas.
+    De acuerdo a la condición de ocupación de cada miembro del hogar se imputa un valor a la variable CP, lo mismo con los años de escolaridad que con determinados ajustes conforman la cariable Valor de los Años de Escolaridad (VAE). Finalmente se reconstruye para cada hoga el tamaño familiar de acuerdo a la metodología de adultos equivalentes.  
+    En el **Apendice Metodológico** se proveen las tablas necesarias para calcular CAPECO así como el código fuente para obtener a nivel de radio censal utilizando el software REDATAM desarrollado por CEPAL, que es el que INDEC utiliza para procesamiento de datos censales. 
+
+El desarrollo de CAPECO en el presente trabajo incluye una simplificación (en tanto que solo se toma la Ciudad de Buenos Aires) y una diferencia con el desarrollado por el INDEC en base a los dato del Censo 2001. En éste, se incluyó en el cuestionario ampliado una pregunta sobre percepción de pensión y/o jubilación. En el Censo de 2010 esta pregunta fue incluida en el cuesitonario ampliado que se aplicó solo a una muestra de la población y, por lo tanto, no permite obtener resultados de esta variable para cada hogar. Dado que, según el cuesitonario ampliado, en la Ciudad de Buenos Aires el 91,5%[^jubiladosCenso] de la población en edad de jubilarse percibe jubilación o pensión, se decidió en este trabajo imputar como jubilados o pesionados al conjunto de la población en edad de jubilarse. Esto tiene por efecto una sobreestimación del indicador CAPECO para la Ciudad. Queda para trabajos posteriores la recalibración del modelo sin incluir esta variable de modo que pueda llevarse adelante una estimación de CAPECO de acuerdo a los datos del Censo 2010.
+    
+[^jubiladosCenso]: http://www.censo2010.indec.gov.ar/cuadrosDefinitivos/Total_pais/P15-Total_pais.xls
+    
+
+Finalmente, la conformación de CAPECO para cada hogar está dada por la siguiente ecuación:
+    
+$$ CAPECO = \frac{\sum\limits_{i=1}^n (CP_i * VAE_i)}{\sum\limits_{i=1}^n Aeq_i} $$
+
+Donde:
+*n*: total de integrantes del hogar
+*CP*: condición de percepción (asume distintos valores según la condición de actividad, la edad, el sexo y el lugar de residencia)
+*VAE*: valor de los años de escolaridad formal invertidos en el mercado laboral.
+*Aeq*: valor en unidades de adulto equivalente de cada integrante de hogar (varía de
+acuerdo al sexo y la edad, siguiendo una tabla de necesidades calóricas y nutricionales)
+    
+```{r capeco}
 source("src/capeco.R")
 hogaresCAPECO = 
   personas %>%
@@ -144,11 +269,10 @@ rm(hogaresCAPECO)
 
 ```
 
-La búsqueda de indicadores de ingresos corrientes para referir a los aspectos menos estructurales de la pobreza y, de algún modo compatibilizar las encuestas urbanas de ocupación e ingreso con las variables censales, ha sido una preocupación en años anteriores. 
+Dados estos indicadores podemos observar su desempeño como regresores en un modelo de regresión simple contra el ingreso. En este trabajo se tomó la decisión de mantener *CONDHAB* como una variable con 3 categorías de modo que mantenga un nivel de medición ordinal y no perder información. Es por ello que el parámetro de CONDHAB en el modelo debe ser 
 
-para eso se desarrollaron indicadores como CONDAHB capeco explicacion
 
-```{r,tablaModelos}
+```{r tablaModelos2,comment=""}
 base = select(hogares,ipcf,capeco,condhab)
 base$condhab = as.numeric(base$condhab)
 
@@ -168,40 +292,142 @@ tablaModelosInsumo2 = data.frame(
   pValue = pf(f[1],f[2],f[3],lower.tail=F))
 tablaModelos2 = rbind(tablaModelos2,tablaModelosInsumo2)
 }
-tablaModelos2 = tablaModelos[2:nrow(tablaModelos2),]
+
+tablaModelos2 = tablaModelos2[2:nrow(tablaModelos2),]
+tablaModelos2X = xtable(tablaModelos2,digits=c(3))
 ```
 
-Se observa que capeco es un mucho mejor candidato como variable única a la hora de detectar sectores de altos ingresos, mientras que condhab es menos competitiva que algun indicador de nbi
 
-```{r}
-with(base,plot(capeco,ipcf))
+```{r printTablaModelos2X,results="asis",fig.align="center"}
+print.xtable(tablaModelos2X,include.rownames=FALSE,type="latex")
 ```
 
-```{r}
+
+Se observa un notable mejor desempeño de **CAPECO** como regresor (da cuenta de un `r round(tablaModelos2$r[1]*100,2)`% de variabilidad del ingreso con un nivel de confianza más que significativo), mientras que **CONDHAB** es menos competitiva que NBI (`r round(tablaModelos2$r[1]*100,2)`). De todos modos, es neccesario recordar que es lógico esperar que aquellas variables relacionadas con sectores de bajos ingresos tengan mala performance como regresor en un modelo simple, dado que no permite explicar la variación de ingresos hacia el interior de los sector de ingresos medios y altos. 
+
+Este abordaje encuentra aquí sus limitaciones. Permite obtener una medida de performance de **CAPECO** como regresor en un modelo lineal simple, que nos permite avanzar en el mapeo. Deja la incógnita sobre qué indicador es el mejor a la hora de georeferenciar a los sectores de bajos ingresos. Se avanzará sobre este punto una vez realizados los mapas correspondientes. Antes se procederá a ofrecer los resultados del modelo de regresión simple del **Ingreso per cápita familiar del hogar (ipcf)** en función del **CAPECO** del mismo.   
+
+##Modelo de regresión simple con CAPECO como regresor
+
+El modelo queda definido entonces por la siguiente ecuación: 
+
+$$ ipcf_i = \beta_0 + \beta_1 CAPECO_i + \epsilon_i $$ 
+
+```{r,modelo}
 fit = lm(ipcf ~ capeco, data = hogares, weights = pondera)
-summary(fit)
+resumenModelo = summary(fit)
+resumenModeloX = xtable(resumenModelo)
+```
+
+Corriendo la regresión sobre la base EAHU 2010 se obtienen los siguientes estimadores:
+
+$$ ipcf_i = `r round(coef(fit)[[1]],1)` + `r round(coef(fit)[[2]],1)`CAPECO_i $$
+
+El siguiente cuadro presenta el resumen de los parámetros de interés del modelo
+
+```{r resumenModelo,results="asis",fig.align="center"}
+print.xtable(resumenModeloX,type="latex")
+```
+
+
+Del modelo se desprende que el valor esperado del ingreso familiar es `r round(coef(fit)[[1]],1)` cuando CAPECO es 0 (ya sea por ausencia de años de escolaridad o por ausencia de miembros del hogar ocupados y/o jubilados)[^notaBeta0] y que ese ingreso aumenta en `r round(coef(fit)[[2]],1)` pesos por cada aumento de una unidad de CAPECO (asumiendo que todas las otra variables omitidas en el modelo, permanezcan constantes). 
+
+
+
+[^notaBeta0]: Es importante recordar que no siempre la ordenada al origen tiene sentido en los modelos de regresión. En este caso es evidente que existen hogares con ingreso nulo.
+
+
+```{r}
+promResiduos= weighted.mean(fit$residuals,hogares$pondera)
+```
+
+Para analizar la bondad de ajuste del modelo se puede comenzar por ver que la media de los residuos es practicamente 0 (`r format(promResiduos,scientific = T)`). A su vez se pueden observar los diferentes análisis de residuos para detectar tendencias subyacentes, casos extremos y/o muy excesivamenteinfluyentes   
+
+**Análisis de residuos del modelo**
+```{r,analisisResiduos,fig.align='left',fig.width=12, fig.height=8}
+par(mfrow=c(2,2))
 plot(fit)
 ```
 
-
-Ajustes
-
-se observan outliers que se explican claramente por el ingreso. son aquellos que ganan mas de 15000 per capita
+Se puede observar la incidencia de algunos outliers que fueron mencionados previamente al comienzo del trabajo relacionados a casos extremos por ingresos muy altos.  También se registra un potencial problema con **CAPECO** en relación a hogares conformados por estudiantes que reciben algún tipo de dieta de los padres y por lo tanto son considerados inactivos (por ende CAPECO toma valor 0) pero que tienen un ingreso medio o alto. Esto explica parte de la variabilidad de ingreso cuando CAPECO toma valor 0. De todos modos no afecta significativamente el desempeño del modelo. 
 
 ```{r, modelo ajustado}
+par(mfrow=c(1,1))
 outliers.ipcf = hogares$ipcf>15000
+estConDieta = personas$cat_inac==3 & personas$capeco==0 & (as.integer(personas$prodeccfr)>6)
+estConDieta = personas$idHogar[estConDieta]
+plot(hogares$capeco,hogares$ipcf,xlab="CAPECO",ylab="IPCF",type="n")
+points(hogares$capeco[!outliers.ipcf],hogares$ipcf[!outliers.ipcf])
+points(hogares$capeco[outliers.ipcf],hogares$ipcf[outliers.ipcf],col = "red", pch = 19)
+points(hogares$capeco[hogares$idHogar %in% estConDieta],hogares$ipcf[hogares$idHogar %in% estConDieta],col = "green", pch = 19)
+abline(fit, lwd = 3, col = "blue")
+legend("topleft", c("", "Outliers","Estudiantes"), col = c("white", "red","green"), pch = c(1,19,19))
+
+```
+
+```{r, modelo2}
 hogaresSinOut = hogares[!outliers.ipcf,]
-```
-
-```{r}
 fit2 = lm(ipcf ~ capeco, data = hogaresSinOut, weights = pondera)
-summary(fit2)
-plot(fit2)
+resumenModelo2 = summary(fit2)
 ```
 
-#Variable en el Censo 2010: análisis y distribución
-#Mapa del ingreso en la Ciudad de Buenos Aires
- Probar mapas competitivos
+Al eliminar los casos extremos se observa una leve mejoría en el desempeño del modelo, más que nada un leve aumento en $R^2$ que alcanza el `r round((resumenModelo2$adj.r.squared)*100,2)`%
+
+**Cuadro resumen modelo sin outliers**
+```{r}
+resumenModelo2
+```
+
+
+
+#Mapas del ingreso en la Ciudad de Buenos Aires
+```{r sourceMpas, include=FALSE}
+source("src/maps.R")
+```
+A partir de este punto, el trabajo no pretende imputar ingresos a cada radio censal. Se trata más bien de, una vez establecido el sentigo y magnitud de la relación entre el ingreso y las variables seleccionadas, mapear la distribución de dichas variables a nivel de radio censal. Para ello se obtienen via el software REDATAM
+
+
+
+condhab es mas sensible a la deteccion de villas miserias. NBI es sensible por ejemplo al hacinamiento en el sector viejo de la capital comuna 1 y 3, cosa que condhab no lo es. Esto habla bien en la medida en que los ingresos corrientes de sectores sin NBI bien pueden ser bajos. 
+
+jefe de hogar inmigrante calramnte arroja una significatividad estadistica no menor como se vio en la EAHU, pero que ademas tiene un sentido espacial dada la feurte correlación que presenta con las zonas de insuficiente condhab y nbi. Esto puede resultar interesante como insumo para eventuales politicas territoriales focalizadas de documentación, salud, transferencia de ingresos directa, etc.
+
+**Mapa Condiciones Habitacionales CONDHAB**
+```{r mapCondhab, fig.align='left',fig.width=14, fig.height=8}
+mapCondhab
+```
+
+
+**Mapa Hacinamiento**
+```{r mapHacinamiento, fig.align='left',fig.width=14, fig.height=8}
+mapHacinamiento
+```
+
+**Mapa Jefe de hogar inmigrante**
+```{r mapJefeNoArg, fig.align='left',fig.width=14, fig.height=8}
+mapJefeNoArg
+```
+
+**Mapa NBI**
+```{r mapNBI, fig.align='left',fig.width=14, fig.height=8}
+mapNBI
+```
+
+
+**Mapa CAPECO **
+```{r mapCapeco, fig.align='left',fig.width=14, fig.height=8}
+mapCapeco
+```
+
+
+**Mapa combinado de CAPECO y NBI**
+```{r mapaFinal, fig.align='left',fig.width=14, fig.height=8}
+mapFinal
+```
+
+
 #Análisis del mapa del ingreso 
 
+#Reproducibilidad de los resultados
 
+Facilitar y asegurar la reproducibilidad y fiscalización de los resultados, proveyendo de los datos y de los códigos fuentes de software que arrojaron esos datos.
