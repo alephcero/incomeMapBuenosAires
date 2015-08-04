@@ -1,0 +1,1090 @@
+CEPAL/CELADE Redatam+SP 01/08/2015				
+				
+Base de datos				
+ C:\Program Files (x86)\INDEC\CPV2010B\BASE_RADIO_Pub\CPV2010 Basico_radio_pub.dic				
+Universo				
+ DPTO.DPTO = 2006				
+Área Geográfica				
+ C:\Program Files (x86)\INDEC\CPV2010B\Sels\Prov02.sel				
+Promedio				
+  de capeco				
+				
+	AREA # 020060101	1252		
+				
+		Casos	Promedio	%
+	 Total y Promedio	242	8,69	100,00 %
+				
+	AREA # 020060102	1253		
+				
+		Casos	Promedio	%
+	 Total y Promedio	345	8,69	100,00 %
+				
+	AREA # 020060103	1254		
+				
+		Casos	Promedio	%
+	 Total y Promedio	348	8,46	100,00 %
+				
+	AREA # 020060104	1255		
+				
+		Casos	Promedio	%
+	 Total y Promedio	275	8,18	100,00 %
+				
+	AREA # 020060105	1256		
+				
+		Casos	Promedio	%
+	 Total y Promedio	432	8,98	100,00 %
+				
+	AREA # 020060106	1257		
+				
+		Casos	Promedio	%
+	 Total y Promedio	349	9,00	100,00 %
+				
+	AREA # 020060107	1258		
+				
+		Casos	Promedio	%
+	 Total y Promedio	260	8,40	100,00 %
+				
+	AREA # 020060108	1259		
+				
+		Casos	Promedio	%
+	 Total y Promedio	311	8,31	100,00 %
+				
+	AREA # 020060109	1260		
+				
+		Casos	Promedio	%
+	 Total y Promedio	228	7,33	100,00 %
+				
+	AREA # 020060110	1261		
+				
+		Casos	Promedio	%
+	 Total y Promedio	147	8,25	100,00 %
+				
+	AREA # 020060111	1262		
+				
+		Casos	Promedio	%
+	 Total y Promedio	253	9,06	100,00 %
+				
+	AREA # 020060112	1263		
+				
+		Casos	Promedio	%
+	 Total y Promedio	292	9,10	100,00 %
+				
+	AREA # 020060201	1264		
+				
+		Casos	Promedio	%
+	 Total y Promedio	388	9,30	100,00 %
+				
+	AREA # 020060202	1265		
+				
+		Casos	Promedio	%
+	 Total y Promedio	334	9,66	100,00 %
+				
+	AREA # 020060203	1266		
+				
+		Casos	Promedio	%
+	 Total y Promedio	244	9,23	100,00 %
+				
+	AREA # 020060204	1267		
+				
+		Casos	Promedio	%
+	 Total y Promedio	247	9,06	100,00 %
+				
+	AREA # 020060205	1268		
+				
+		Casos	Promedio	%
+	 Total y Promedio	230	9,23	100,00 %
+				
+	AREA # 020060206	1269		
+				
+		Casos	Promedio	%
+	 Total y Promedio	343	9,61	100,00 %
+				
+	AREA # 020060207	1270		
+				
+		Casos	Promedio	%
+	 Total y Promedio	346	9,76	100,00 %
+				
+	AREA # 020060208	1271		
+				
+		Casos	Promedio	%
+	 Total y Promedio	369	9,10	100,00 %
+				
+	AREA # 020060209	1272		
+				
+		Casos	Promedio	%
+	 Total y Promedio	253	9,37	100,00 %
+				
+	AREA # 020060210	1273		
+				
+		Casos	Promedio	%
+	 Total y Promedio	334	8,94	100,00 %
+				
+	AREA # 020060211	1274		
+				
+		Casos	Promedio	%
+	 Total y Promedio	510	10,52	100,00 %
+				
+	AREA # 020060301	1275		
+				
+		Casos	Promedio	%
+	 Total y Promedio	368	9,05	100,00 %
+				
+	AREA # 020060302	1276		
+				
+		Casos	Promedio	%
+	 Total y Promedio	305	9,15	100,00 %
+				
+	AREA # 020060303	1277		
+				
+		Casos	Promedio	%
+	 Total y Promedio	349	9,42	100,00 %
+				
+	AREA # 020060304	1278		
+				
+		Casos	Promedio	%
+	 Total y Promedio	244	9,95	100,00 %
+				
+	AREA # 020060305	1279		
+				
+		Casos	Promedio	%
+	 Total y Promedio	260	9,19	100,00 %
+				
+	AREA # 020060306	1280		
+				
+		Casos	Promedio	%
+	 Total y Promedio	356	9,54	100,00 %
+				
+	AREA # 020060307	1281		
+				
+		Casos	Promedio	%
+	 Total y Promedio	371	9,49	100,00 %
+				
+	AREA # 020060308	1282		
+				
+		Casos	Promedio	%
+	 Total y Promedio	305	9,89	100,00 %
+				
+	AREA # 020060309	1283		
+				
+		Casos	Promedio	%
+	 Total y Promedio	451	9,26	100,00 %
+				
+	AREA # 020060310	1284		
+				
+		Casos	Promedio	%
+	 Total y Promedio	396	10,21	100,00 %
+				
+	AREA # 020060401	1285		
+				
+		Casos	Promedio	%
+	 Total y Promedio	208	8,89	100,00 %
+				
+	AREA # 020060402	1286		
+				
+		Casos	Promedio	%
+	 Total y Promedio	227	9,53	100,00 %
+				
+	AREA # 020060403	1287		
+				
+		Casos	Promedio	%
+	 Total y Promedio	339	9,99	100,00 %
+				
+	AREA # 020060404	1288		
+				
+		Casos	Promedio	%
+	 Total y Promedio	319	8,95	100,00 %
+				
+	AREA # 020060405	1289		
+				
+		Casos	Promedio	%
+	 Total y Promedio	288	9,68	100,00 %
+				
+	AREA # 020060406	1290		
+				
+		Casos	Promedio	%
+	 Total y Promedio	322	9,33	100,00 %
+				
+	AREA # 020060407	1291		
+				
+		Casos	Promedio	%
+	 Total y Promedio	242	8,49	100,00 %
+				
+	AREA # 020060408	1292		
+				
+		Casos	Promedio	%
+	 Total y Promedio	370	9,92	100,00 %
+				
+	AREA # 020060409	1293		
+				
+		Casos	Promedio	%
+	 Total y Promedio	331	9,03	100,00 %
+				
+	AREA # 020060410	1294		
+				
+		Casos	Promedio	%
+	 Total y Promedio	339	10,20	100,00 %
+				
+	AREA # 020060411	1295		
+				
+		Casos	Promedio	%
+	 Total y Promedio	345	10,77	100,00 %
+				
+	AREA # 020060501	1296		
+				
+		Casos	Promedio	%
+	 Total y Promedio	383	9,51	100,00 %
+				
+	AREA # 020060502	1297		
+				
+		Casos	Promedio	%
+	 Total y Promedio	453	9,85	100,00 %
+				
+	AREA # 020060503	1298		
+				
+		Casos	Promedio	%
+	 Total y Promedio	372	9,92	100,00 %
+				
+	AREA # 020060504	1299		
+				
+		Casos	Promedio	%
+	 Total y Promedio	293	10,27	100,00 %
+				
+	AREA # 020060505	1300		
+				
+		Casos	Promedio	%
+	 Total y Promedio	393	10,28	100,00 %
+				
+	AREA # 020060506	1301		
+				
+		Casos	Promedio	%
+	 Total y Promedio	304	9,75	100,00 %
+				
+	AREA # 020060507	1302		
+				
+		Casos	Promedio	%
+	 Total y Promedio	334	9,74	100,00 %
+				
+	AREA # 020060508	1303		
+				
+		Casos	Promedio	%
+	 Total y Promedio	205	10,41	100,00 %
+				
+	AREA # 020060509	1304		
+				
+		Casos	Promedio	%
+	 Total y Promedio	237	10,21	100,00 %
+				
+	AREA # 020060510	1305		
+				
+		Casos	Promedio	%
+	 Total y Promedio	407	9,17	100,00 %
+				
+	AREA # 020060511	1306		
+				
+		Casos	Promedio	%
+	 Total y Promedio	416	10,06	100,00 %
+				
+	AREA # 020060512	1307		
+				
+		Casos	Promedio	%
+	 Total y Promedio	159	9,68	100,00 %
+				
+	AREA # 020060601	1308		
+				
+		Casos	Promedio	%
+	 Total y Promedio	546	10,26	100,00 %
+				
+	AREA # 020060602	1309		
+				
+		Casos	Promedio	%
+	 Total y Promedio	792	10,81	100,00 %
+				
+	AREA # 020060603	1310		
+				
+		Casos	Promedio	%
+	 Total y Promedio	509	10,21	100,00 %
+				
+	AREA # 020060604	1311		
+				
+		Casos	Promedio	%
+	 Total y Promedio	226	9,51	100,00 %
+				
+	AREA # 020060605	1312		
+				
+		Casos	Promedio	%
+	 Total y Promedio	202	10,68	100,00 %
+				
+	AREA # 020060606	1313		
+				
+		Casos	Promedio	%
+	 Total y Promedio	334	10,19	100,00 %
+				
+	AREA # 020060607	1314		
+				
+		Casos	Promedio	%
+	 Total y Promedio	350	10,17	100,00 %
+				
+	AREA # 020060608	1315		
+				
+		Casos	Promedio	%
+	 Total y Promedio	410	9,82	100,00 %
+				
+	AREA # 020060609	1316		
+				
+		Casos	Promedio	%
+	 Total y Promedio	357	10,13	100,00 %
+				
+	AREA # 020060701	1317		
+				
+		Casos	Promedio	%
+	 Total y Promedio	280	10,18	100,00 %
+				
+	AREA # 020060702	1318		
+				
+		Casos	Promedio	%
+	 Total y Promedio	344	10,49	100,00 %
+				
+	AREA # 020060703	1319		
+				
+		Casos	Promedio	%
+	 Total y Promedio	279	10,21	100,00 %
+				
+	AREA # 020060704	1320		
+				
+		Casos	Promedio	%
+	 Total y Promedio	372	9,33	100,00 %
+				
+	AREA # 020060705	1321		
+				
+		Casos	Promedio	%
+	 Total y Promedio	359	10,23	100,00 %
+				
+	AREA # 020060706	1322		
+				
+		Casos	Promedio	%
+	 Total y Promedio	262	10,11	100,00 %
+				
+	AREA # 020060707	1323		
+				
+		Casos	Promedio	%
+	 Total y Promedio	403	10,22	100,00 %
+				
+	AREA # 020060708	1324		
+				
+		Casos	Promedio	%
+	 Total y Promedio	307	9,40	100,00 %
+				
+	AREA # 020060709	1325		
+				
+		Casos	Promedio	%
+	 Total y Promedio	321	10,42	100,00 %
+				
+	AREA # 020060710	1326		
+				
+		Casos	Promedio	%
+	 Total y Promedio	327	9,89	100,00 %
+				
+	AREA # 020060711	1327		
+				
+		Casos	Promedio	%
+	 Total y Promedio	293	10,37	100,00 %
+				
+	AREA # 020060712	1328		
+				
+		Casos	Promedio	%
+	 Total y Promedio	286	10,10	100,00 %
+				
+	AREA # 020060713	1329		
+				
+		Casos	Promedio	%
+	 Total y Promedio	236	10,77	100,00 %
+				
+	AREA # 020060801	1330		
+				
+		Casos	Promedio	%
+	 Total y Promedio	355	9,63	100,00 %
+				
+	AREA # 020060802	1331		
+				
+		Casos	Promedio	%
+	 Total y Promedio	458	10,41	100,00 %
+				
+	AREA # 020060803	1332		
+				
+		Casos	Promedio	%
+	 Total y Promedio	260	10,93	100,00 %
+				
+	AREA # 020060804	1333		
+				
+		Casos	Promedio	%
+	 Total y Promedio	300	10,40	100,00 %
+				
+	AREA # 020060805	1334		
+				
+		Casos	Promedio	%
+	 Total y Promedio	251	9,98	100,00 %
+				
+	AREA # 020060806	1335		
+				
+		Casos	Promedio	%
+	 Total y Promedio	533	9,25	100,00 %
+				
+	AREA # 020060807	1336		
+				
+		Casos	Promedio	%
+	 Total y Promedio	319	10,44	100,00 %
+				
+	AREA # 020060808	1337		
+				
+		Casos	Promedio	%
+	 Total y Promedio	516	10,48	100,00 %
+				
+	AREA # 020060809	1338		
+				
+		Casos	Promedio	%
+	 Total y Promedio	266	9,78	100,00 %
+				
+	AREA # 020060810	1339		
+				
+		Casos	Promedio	%
+	 Total y Promedio	334	10,93	100,00 %
+				
+	AREA # 020060901	1340		
+				
+		Casos	Promedio	%
+	 Total y Promedio	297	9,80	100,00 %
+				
+	AREA # 020060902	1341		
+				
+		Casos	Promedio	%
+	 Total y Promedio	260	10,20	100,00 %
+				
+	AREA # 020060903	1342		
+				
+		Casos	Promedio	%
+	 Total y Promedio	293	10,25	100,00 %
+				
+	AREA # 020060904	1343		
+				
+		Casos	Promedio	%
+	 Total y Promedio	430	10,70	100,00 %
+				
+	AREA # 020060905	1344		
+				
+		Casos	Promedio	%
+	 Total y Promedio	174	9,23	100,00 %
+				
+	AREA # 020060906	1345		
+				
+		Casos	Promedio	%
+	 Total y Promedio	381	10,19	100,00 %
+				
+	AREA # 020060907	1346		
+				
+		Casos	Promedio	%
+	 Total y Promedio	249	10,11	100,00 %
+				
+	AREA # 020060908	1347		
+				
+		Casos	Promedio	%
+	 Total y Promedio	196	10,68	100,00 %
+				
+	AREA # 020060909	1348		
+				
+		Casos	Promedio	%
+	 Total y Promedio	362	10,43	100,00 %
+				
+	AREA # 020060910	1349		
+				
+		Casos	Promedio	%
+	 Total y Promedio	324	10,10	100,00 %
+				
+	AREA # 020061001	1350		
+				
+		Casos	Promedio	%
+	 Total y Promedio	304	9,79	100,00 %
+				
+	AREA # 020061002	1351		
+				
+		Casos	Promedio	%
+	 Total y Promedio	288	8,96	100,00 %
+				
+	AREA # 020061003	1352		
+				
+		Casos	Promedio	%
+	 Total y Promedio	384	10,69	100,00 %
+				
+	AREA # 020061004	1353		
+				
+		Casos	Promedio	%
+	 Total y Promedio	337	9,66	100,00 %
+				
+	AREA # 020061005	1354		
+				
+		Casos	Promedio	%
+	 Total y Promedio	461	10,57	100,00 %
+				
+	AREA # 020061006	1355		
+				
+		Casos	Promedio	%
+	 Total y Promedio	455	10,04	100,00 %
+				
+	AREA # 020061007	1356		
+				
+		Casos	Promedio	%
+	 Total y Promedio	336	10,70	100,00 %
+				
+	AREA # 020061008	1357		
+				
+		Casos	Promedio	%
+	 Total y Promedio	570	10,13	100,00 %
+				
+	AREA # 020061009	1358		
+				
+		Casos	Promedio	%
+	 Total y Promedio	246	10,44	100,00 %
+				
+	AREA # 020061010	1359		
+				
+		Casos	Promedio	%
+	 Total y Promedio	463	10,44	100,00 %
+				
+	AREA # 020061101	1360		
+				
+		Casos	Promedio	%
+	 Total y Promedio	430	9,56	100,00 %
+				
+	AREA # 020061102	1361		
+				
+		Casos	Promedio	%
+	 Total y Promedio	242	9,85	100,00 %
+				
+	AREA # 020061103	1362		
+				
+		Casos	Promedio	%
+	 Total y Promedio	368	9,94	100,00 %
+				
+	AREA # 020061104	1363		
+				
+		Casos	Promedio	%
+	 Total y Promedio	343	11,40	100,00 %
+				
+	AREA # 020061105	1364		
+				
+		Casos	Promedio	%
+	 Total y Promedio	249	9,81	100,00 %
+				
+	AREA # 020061106	1365		
+				
+		Casos	Promedio	%
+	 Total y Promedio	310	9,98	100,00 %
+				
+	AREA # 020061107	1366		
+				
+		Casos	Promedio	%
+	 Total y Promedio	357	9,78	100,00 %
+				
+	AREA # 020061108	1367		
+				
+		Casos	Promedio	%
+	 Total y Promedio	369	10,25	100,00 %
+				
+	AREA # 020061109	1368		
+				
+		Casos	Promedio	%
+	 Total y Promedio	289	9,85	100,00 %
+				
+	AREA # 020061110	1369		
+				
+		Casos	Promedio	%
+	 Total y Promedio	240	8,86	100,00 %
+				
+	AREA # 020061201	1370		
+				
+		Casos	Promedio	%
+	 Total y Promedio	256	10,60	100,00 %
+				
+	AREA # 020061202	1371		
+				
+		Casos	Promedio	%
+	 Total y Promedio	229	8,90	100,00 %
+				
+	AREA # 020061203	1372		
+				
+		Casos	Promedio	%
+	 Total y Promedio	289	9,07	100,00 %
+				
+	AREA # 020061204	1373		
+				
+		Casos	Promedio	%
+	 Total y Promedio	193	9,79	100,00 %
+				
+	AREA # 020061205	1374		
+				
+		Casos	Promedio	%
+	 Total y Promedio	384	10,06	100,00 %
+				
+	AREA # 020061206	1375		
+				
+		Casos	Promedio	%
+	 Total y Promedio	243	9,75	100,00 %
+				
+	AREA # 020061207	1376		
+				
+		Casos	Promedio	%
+	 Total y Promedio	349	10,56	100,00 %
+				
+	AREA # 020061208	1377		
+				
+		Casos	Promedio	%
+	 Total y Promedio	305	10,09	100,00 %
+				
+	AREA # 020061209	1378		
+				
+		Casos	Promedio	%
+	 Total y Promedio	362	9,87	100,00 %
+				
+	AREA # 020061210	1379		
+				
+		Casos	Promedio	%
+	 Total y Promedio	236	10,43	100,00 %
+				
+	AREA # 020061211	1380		
+				
+		Casos	Promedio	%
+	 Total y Promedio	372	9,23	100,00 %
+				
+	AREA # 020061212	1381		
+				
+		Casos	Promedio	%
+	 Total y Promedio	209	8,88	100,00 %
+				
+	AREA # 020061301	1382		
+				
+		Casos	Promedio	%
+	 Total y Promedio	307	10,23	100,00 %
+				
+	AREA # 020061302	1383		
+				
+		Casos	Promedio	%
+	 Total y Promedio	587	10,03	100,00 %
+				
+	AREA # 020061303	1384		
+				
+		Casos	Promedio	%
+	 Total y Promedio	304	10,00	100,00 %
+				
+	AREA # 020061304	1385		
+				
+		Casos	Promedio	%
+	 Total y Promedio	498	9,52	100,00 %
+				
+	AREA # 020061305	1386		
+				
+		Casos	Promedio	%
+	 Total y Promedio	362	9,91	100,00 %
+				
+	AREA # 020061306	1387		
+				
+		Casos	Promedio	%
+	 Total y Promedio	267	9,81	100,00 %
+				
+	AREA # 020061307	1388		
+				
+		Casos	Promedio	%
+	 Total y Promedio	370	10,57	100,00 %
+				
+	AREA # 020061308	1389		
+				
+		Casos	Promedio	%
+	 Total y Promedio	497	9,87	100,00 %
+				
+	AREA # 020061309	1390		
+				
+		Casos	Promedio	%
+	 Total y Promedio	426	10,60	100,00 %
+				
+	AREA # 020061401	1391		
+				
+		Casos	Promedio	%
+	 Total y Promedio	384	10,50	100,00 %
+				
+	AREA # 020061402	1392		
+				
+		Casos	Promedio	%
+	 Total y Promedio	250	9,75	100,00 %
+				
+	AREA # 020061403	1393		
+				
+		Casos	Promedio	%
+	 Total y Promedio	386	10,40	100,00 %
+				
+	AREA # 020061404	1394		
+				
+		Casos	Promedio	%
+	 Total y Promedio	531	10,48	100,00 %
+				
+	AREA # 020061405	1395		
+				
+		Casos	Promedio	%
+	 Total y Promedio	408	10,45	100,00 %
+				
+	AREA # 020061406	1396		
+				
+		Casos	Promedio	%
+	 Total y Promedio	484	10,76	100,00 %
+				
+	AREA # 020061407	1397		
+				
+		Casos	Promedio	%
+	 Total y Promedio	237	10,16	100,00 %
+				
+	AREA # 020061408	1398		
+				
+		Casos	Promedio	%
+	 Total y Promedio	220	10,60	100,00 %
+				
+	AREA # 020061409	1399		
+				
+		Casos	Promedio	%
+	 Total y Promedio	309	10,33	100,00 %
+				
+	AREA # 020061410	1400		
+				
+		Casos	Promedio	%
+	 Total y Promedio	392	10,44	100,00 %
+				
+	AREA # 020061501	1401		
+				
+		Casos	Promedio	%
+	 Total y Promedio	285	10,14	100,00 %
+				
+	AREA # 020061502	1402		
+				
+		Casos	Promedio	%
+	 Total y Promedio	770	10,18	100,00 %
+				
+	AREA # 020061503	1403		
+				
+		Casos	Promedio	%
+	 Total y Promedio	358	10,46	100,00 %
+				
+	AREA # 020061504	1404		
+				
+		Casos	Promedio	%
+	 Total y Promedio	270	10,11	100,00 %
+				
+	AREA # 020061505	1405		
+				
+		Casos	Promedio	%
+	 Total y Promedio	321	10,37	100,00 %
+				
+	AREA # 020061506	1406		
+				
+		Casos	Promedio	%
+	 Total y Promedio	284	10,94	100,00 %
+				
+	AREA # 020061507	1407		
+				
+		Casos	Promedio	%
+	 Total y Promedio	336	10,15	100,00 %
+				
+	AREA # 020061508	1408		
+				
+		Casos	Promedio	%
+	 Total y Promedio	445	9,78	100,00 %
+				
+	AREA # 020061509	1409		
+				
+		Casos	Promedio	%
+	 Total y Promedio	227	10,55	100,00 %
+				
+	AREA # 020061510	1410		
+				
+		Casos	Promedio	%
+	 Total y Promedio	305	11,63	100,00 %
+				
+	AREA # 020061601	1411		
+				
+		Casos	Promedio	%
+	 Total y Promedio	283	9,58	100,00 %
+				
+	AREA # 020061602	1412		
+				
+		Casos	Promedio	%
+	 Total y Promedio	284	10,65	100,00 %
+				
+	AREA # 020061603	1413		
+				
+		Casos	Promedio	%
+	 Total y Promedio	393	10,49	100,00 %
+				
+	AREA # 020061604	1414		
+				
+		Casos	Promedio	%
+	 Total y Promedio	310	10,55	100,00 %
+				
+	AREA # 020061605	1415		
+				
+		Casos	Promedio	%
+	 Total y Promedio	393	10,20	100,00 %
+				
+	AREA # 020061606	1416		
+				
+		Casos	Promedio	%
+	 Total y Promedio	415	11,15	100,00 %
+				
+	AREA # 020061607	1417		
+				
+		Casos	Promedio	%
+	 Total y Promedio	388	9,78	100,00 %
+				
+	AREA # 020061608	1418		
+				
+		Casos	Promedio	%
+	 Total y Promedio	560	10,43	100,00 %
+				
+	AREA # 020061609	1419		
+				
+		Casos	Promedio	%
+	 Total y Promedio	418	9,73	100,00 %
+				
+	AREA # 020061610	1420		
+				
+		Casos	Promedio	%
+	 Total y Promedio	499	10,32	100,00 %
+				
+	AREA # 020061611	1421		
+				
+		Casos	Promedio	%
+	 Total y Promedio	390	9,76	100,00 %
+				
+	AREA # 020061701	1422		
+				
+		Casos	Promedio	%
+	 Total y Promedio	416	10,38	100,00 %
+				
+	AREA # 020061702	1423		
+				
+		Casos	Promedio	%
+	 Total y Promedio	419	10,12	100,00 %
+				
+	AREA # 020061703	1424		
+				
+		Casos	Promedio	%
+	 Total y Promedio	309	9,92	100,00 %
+				
+	AREA # 020061704	1425		
+				
+		Casos	Promedio	%
+	 Total y Promedio	360	10,12	100,00 %
+				
+	AREA # 020061705	1426		
+				
+		Casos	Promedio	%
+	 Total y Promedio	839	9,59	100,00 %
+				
+	AREA # 020061706	1427		
+				
+		Casos	Promedio	%
+	 Total y Promedio	507	9,71	100,00 %
+				
+	AREA # 020061707	1428		
+				
+		Casos	Promedio	%
+	 Total y Promedio	277	10,23	100,00 %
+				
+	AREA # 020061801	1429		
+				
+		Casos	Promedio	%
+	 Total y Promedio	263	10,32	100,00 %
+				
+	AREA # 020061802	1430		
+				
+		Casos	Promedio	%
+	 Total y Promedio	257	9,98	100,00 %
+				
+	AREA # 020061803	1431		
+				
+		Casos	Promedio	%
+	 Total y Promedio	313	10,26	100,00 %
+				
+	AREA # 020061804	1432		
+				
+		Casos	Promedio	%
+	 Total y Promedio	316	10,67	100,00 %
+				
+	AREA # 020061805	1433		
+				
+		Casos	Promedio	%
+	 Total y Promedio	390	10,07	100,00 %
+				
+	AREA # 020061806	1434		
+				
+		Casos	Promedio	%
+	 Total y Promedio	454	10,81	100,00 %
+				
+	AREA # 020061807	1435		
+				
+		Casos	Promedio	%
+	 Total y Promedio	526	10,36	100,00 %
+				
+	AREA # 020061808	1436		
+				
+		Casos	Promedio	%
+	 Total y Promedio	512	10,38	100,00 %
+				
+	AREA # 020061809	1437		
+				
+		Casos	Promedio	%
+	 Total y Promedio	395	10,48	100,00 %
+				
+	AREA # 020061901	1438		
+				
+		Casos	Promedio	%
+	 Total y Promedio	385	10,60	100,00 %
+				
+	AREA # 020061902	1439		
+				
+		Casos	Promedio	%
+	 Total y Promedio	641	10,73	100,00 %
+				
+	AREA # 020061903	1440		
+				
+		Casos	Promedio	%
+	 Total y Promedio	605	10,51	100,00 %
+				
+	AREA # 020061904	1441		
+				
+		Casos	Promedio	%
+	 Total y Promedio	453	10,14	100,00 %
+				
+	AREA # 020061905	1442		
+				
+		Casos	Promedio	%
+	 Total y Promedio	306	9,76	100,00 %
+				
+	AREA # 020061906	1443		
+				
+		Casos	Promedio	%
+	 Total y Promedio	439	10,68	100,00 %
+				
+	AREA # 020061907	1444		
+				
+		Casos	Promedio	%
+	 Total y Promedio	444	9,85	100,00 %
+				
+	AREA # 020061908	1445		
+				
+		Casos	Promedio	%
+	 Total y Promedio	431	10,25	100,00 %
+				
+	AREA # 020062001	1446		
+				
+		Casos	Promedio	%
+	 Total y Promedio	214	9,97	100,00 %
+				
+	AREA # 020062002	1447		
+				
+		Casos	Promedio	%
+	 Total y Promedio	258	10,41	100,00 %
+				
+	AREA # 020062003	1448		
+				
+		Casos	Promedio	%
+	 Total y Promedio	447	10,49	100,00 %
+				
+	AREA # 020062004	1449		
+				
+		Casos	Promedio	%
+	 Total y Promedio	256	10,52	100,00 %
+				
+	AREA # 020062005	1450		
+				
+		Casos	Promedio	%
+	 Total y Promedio	384	10,26	100,00 %
+				
+	AREA # 020062006	1451		
+				
+		Casos	Promedio	%
+	 Total y Promedio	380	10,75	100,00 %
+				
+	AREA # 020062007	1452		
+				
+		Casos	Promedio	%
+	 Total y Promedio	254	9,96	100,00 %
+				
+	AREA # 020062008	1453		
+				
+		Casos	Promedio	%
+	 Total y Promedio	483	9,88	100,00 %
+				
+	AREA # 020062009	1454		
+				
+		Casos	Promedio	%
+	 Total y Promedio	317	10,05	100,00 %
+				
+	AREA # 020062010	1455		
+				
+		Casos	Promedio	%
+	 Total y Promedio	385	9,81	100,00 %
+				
+	AREA # 020062101	1456		
+				
+		Casos	Promedio	%
+	 Total y Promedio	293	9,84	100,00 %
+				
+	AREA # 020062102	1457		
+				
+		Casos	Promedio	%
+	 Total y Promedio	452	10,30	100,00 %
+				
+	AREA # 020062103	1458		
+				
+		Casos	Promedio	%
+	 Total y Promedio	454	10,00	100,00 %
+				
+	AREA # 020062104	1459		
+				
+		Casos	Promedio	%
+	 Total y Promedio	262	9,11	100,00 %
+				
+	AREA # 020062105	1460		
+				
+		Casos	Promedio	%
+	 Total y Promedio	330	10,35	100,00 %
+				
+	AREA # 020062106	1461		
+				
+		Casos	Promedio	%
+	 Total y Promedio	232	9,61	100,00 %
+				
+	AREA # 020062107	1462		
+				
+		Casos	Promedio	%
+	 Total y Promedio	380	9,13	100,00 %
+				
+	AREA # 020062108	1463		
+				
+		Casos	Promedio	%
+	 Total y Promedio	467	10,06	100,00 %
+				
+	AREA # 020062109	1464		
+				
+		Casos	Promedio	%
+	 Total y Promedio	294	10,06	100,00 %
+				
+	AREA # 020062110	1465		
+				
+		Casos	Promedio	%
+	 Total y Promedio	368	9,65	100,00 %
+				
+	AREA # 020062111	1466		
+				
+		Casos	Promedio	%
+	 Total y Promedio	390	9,17	100,00 %
+				
+	RESUMEN			
+				
+		Casos	Promedio	%
+	 Total y Promedio	75.302	9,99	100,00 %
